@@ -17,17 +17,21 @@ Follow instructions for your given `development OS` and `target OS`.
 
 ## Quick start
 
-To create a new project using the boilerplate simply run :
+Install the package to global
 
 ```
-npx react-native@latest init MyApp --template git+ssh://git@bitbucket.org:poetaadmin/codebase.mobile.git#master
-yarn -g add git+ssh://git@bitbucket.org:poetaadmin/codebase.mobile.git#master
+npm install -g poeta-rn
+```
+or 
+
+```
+yarn global add poeta-rn
 ```
 
 Assuming you have all the requirements installed, you can run the project by running:
 
-- `yarn start` to start the metro bundler, in a dedicated terminal
-- `yarn <platform>` to run the *platform* application (remember to start a simulator or connect a device)
+- `poeta-rn -h` to show help
+- `poeta-rn -mp` to create a new react project
 
 ## License
 
