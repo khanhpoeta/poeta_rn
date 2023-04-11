@@ -1,0 +1,15 @@
+{
+  "display": "React Native",
+  "_version": "2.0.3",
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "lib": ["es2019", "dom"],
+    "declaration": true,
+    "outDir": "build" /* Redirect output structure to the directory. */,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "exclude": ["build", "**/test/*.ts", "**/__mock__/*.ts"]
+}

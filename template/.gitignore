@@ -1,0 +1,52 @@
+# OSX
+#
+.DS_Store
+
+# packages
+**/node_modules/
+**/build/
+package-lock.json
+
+# ios
+Podfile.lock
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+ios/.xcode.env.local
+xcuserdata
+/ios/Pods/
+/vendor/bundle/
+
+# android
+.idea
+.gradle
+local.properties
+*.iml
+*.hprof
+.cxx/
+!debug.keystore
+
+# Bundle artifact
+*.jsbundle
+
+# node.js
+#
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn.lock
+
+# local environment
+.env

@@ -32,3 +32,5 @@ Assuming you have all the requirements installed, you can run the project by run
 ## License
 
 This project is released under the [MIT License](LICENSE).
+
+## About us

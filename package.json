@@ -1,0 +1,46 @@
+{
+  "name": "poeta-rn",
+  "version": "0.0.1",
+  "description": "Poeta React Native Boilerplate",
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org/poetaadmin/codebase.mobile.git"
+  },
+  "license": "Poeta",
+  "main": ".build/index.js",
+  "bin": {
+    "poeta-rn": "./build/index.js"
+  },
+  "scripts": {
+    "build": "npx tsc"
+  },
+  "dependencies": {
+    "app-root-path": "^3.1.0",
+    "commander": "^10.0.0",
+    "figlet": "^1.6.0",
+    "kleur": "^4.1.4",
+    "prompts": "^2.4.1"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.17.0",
+    "@commitlint/cli": "^16.0.2",
+    "@commitlint/config-conventional": "^16.0.0",
+    "@commitlint/cz-commitlint": "^16.0.0",
+    "@commitlint/prompt-cli": "^16.0.0",
+    "@types/figlet": "^1.5.5",
+    "@types/prompts": "^2.4.4",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.19.0",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.32.0",
+    "husky": "^7.0.4",
+    "typescript": "4.4.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
+  }
+}

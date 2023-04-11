@@ -1,0 +1,21 @@
+{
+  "display": "React Native",
+  "_version": "0.0.1",
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "lib": ["es2019", "dom"],
+    "declaration": true,
+    "rootDir": "src" /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */,
+    "outDir": "build" /* Redirect output structure to the directory. */,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": [
+          "./src/*"
+      ]
+    }
+  },
+  "exclude": ["build", "template", "**/test/*.ts", "**/__mock__/*.ts"]
+}
