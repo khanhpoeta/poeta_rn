@@ -15,8 +15,8 @@
     "lint:fix": "ultra -r lint:fix",
     "reset": "find . -type dir -name node_modules | xargs rm -rf && rm -rf yarn.lock",
     "build": "yarn build-shared",
-    "build-shared": "yarn workspace @nupharma/shared build",
-    "build-react-native-shared": "yarn workspace @nupharma/react-native-shared build"
+    "build-shared": "yarn workspace @poeta/shared build",
+    "build-react-native-shared": "yarn workspace @poeta/react-native-shared build"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",

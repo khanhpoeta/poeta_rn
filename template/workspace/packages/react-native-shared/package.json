@@ -1,0 +1,22 @@
+{
+  "name": "@poeta/react-native-shared",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Poeta React Native Library",
+  "main": "build/index.js",
+  "typings": "build/index.d.ts",
+  "scripts": {
+    "build": "npm run lint && tsc",
+    "lint": "eslint **/*.ts",
+    "lint:fix": "yarn lint --fix"
+  },
+  "dependencies": {
+    "@rneui/base": "^4.0.0-rc.7",
+    "date-fns": "^2.29.3",
+    "react-native-date-picker": "^4.2.9",
+    "react-native-fast-image": "^8.6.3"
+  },
+  "devDependencies": {
+    "@types/react-native": "^0.70"
+  }
+}

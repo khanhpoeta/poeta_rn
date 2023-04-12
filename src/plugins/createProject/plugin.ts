@@ -10,7 +10,7 @@ export async function apply(value: any, previousValue: any):Promise<void> {
     fs.lstatSync(`${currentDirectory}/packages`).isDirectory();
   }
   catch {
-    await execSync(`cp -r ${appRoot.path+'/template/.'} ${currentDirectory}`, { stdio: 'pipe' });
+    await execSync(`cp -r ${appRoot.path+'/template/'} ${currentDirectory}`, { stdio: 'pipe' });
   }
 
   const projectType = previousValue as ProjectType;

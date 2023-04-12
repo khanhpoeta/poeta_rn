@@ -4,8 +4,8 @@ import {
   IAppConfig,
   DataResponse,
   APIResponse,
-} from "../models";
-import { BaseDAL } from "./BaseDAL";
+} from "../../models";
+import { BaseDAL } from "../BaseDAL";
 
 export class AppConfigDAL extends BaseDAL {
   public getAlls() {

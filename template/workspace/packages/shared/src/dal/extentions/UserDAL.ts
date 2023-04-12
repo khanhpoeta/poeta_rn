@@ -1,8 +1,8 @@
 import {
   ITokenBE,
   IToken,
-} from "../models";
-import { BaseDAL } from "./BaseDAL";
+} from "../../models";
+import { BaseDAL } from "../BaseDAL";
 
 export class UserDAL extends BaseDAL {
   public generateUserToken(params?: ITokenBE) {
