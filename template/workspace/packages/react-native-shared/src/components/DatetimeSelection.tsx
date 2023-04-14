@@ -1,7 +1,8 @@
 import DatePicker from 'react-native-date-picker';
-import {  Icon, Input, InputProps, Theme } from '@rneui/base';
-import { format } from 'date-fns'
-import React from 'react';
+import { Icon, Input, InputProps, Theme } from '@rneui/base';
+import { format } from 'date-fns';
+import React, { LegacyRef, Ref, createRef, useRef } from 'react';
+import { TextInput } from 'react-native';
 
 interface IDateTimeSelectionProps extends InputProps {
   /**
@@ -29,16 +30,16 @@ interface IDatetimeSelectionState {
 }
 
 export class DatetimeSelection extends React.Component<
-  IDateTimeSelectionProps & {theme?: Theme},
+  IDateTimeSelectionProps & { theme?: Theme },
   IDatetimeSelectionState
 > {
   static displayName = 'DatetimeSelection';
-  textInput: React.RefObject<Input>;
- 
+  textInput: React.RefObject<Input> | undefined;
+
   constructor(props: IDateTimeSelectionProps) {
     super(props);
-    this.textInput = React.createRef<Input>();
-    
+    this.textInput = React.createRef();
+
     this.state = {
       open: false,
       date: props.currentDate,
@@ -66,26 +67,29 @@ export class DatetimeSelection extends React.Component<
       } else {
         onDateChange(undefined);
       }
-      this.setState({open: false, date: date});
+      this.setState({ open: false, date: date });
     };
 
     const blur = () => {
-      this.setState({open: false});
-      this.textInput?.current?.blur();
+      this.setState({ open: false });
+      this.textInput.current.blur();
     };
 
     return (
       <>
         <Input
-          ref={this.textInput}
+          ref={this.textInput as LegacyRef<Input> & Ref<TextInput>}
           value={
             this.state.date
-              ? format(this.state.date, this.state.datetimeFormat ?? 'yyyy-MM-dd')
+              ? format(
+                  this.state.date,
+                  this.state.datetimeFormat ?? 'yyyy-MM-dd'
+                )
               : ''
           }
           onBlur={onBlur}
           onPressIn={() => {
-            this.setState({open: true});
+            this.setState({ open: true });
           }}
           clearButtonMode="never"
           errorMessage={errorMessage}
@@ -115,7 +119,7 @@ export class DatetimeSelection extends React.Component<
           maximumDate={maxDate}
           open={this.state.open}
           date={this.state.date ?? new Date()}
-          onConfirm={date => {
+          onConfirm={(date) => {
             onSelectionChange(date);
           }}
           onCancel={blur}

@@ -1,3 +1,2 @@
-export * from './DatetimeSelection';
-export * from './Image';
-export * from './WarningMessage';
+export * from './theme';
+export * from './components';

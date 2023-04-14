@@ -7,24 +7,32 @@
     "nohoist": [
       "**/react-native-auth0/**",
       "**/react-native-config/**",
-      "**/@types/react-native-auth0/**"
+      "**/@types/react-native-auth0/**",
+      "**/@babel/eslint-parser/**",
+      "**/@typescript-eslint/eslint-plugin/**",
+      "**/@typescript-eslint/parser/**",
+      "**/babel-plugin-module-resolver/**",
+      "**/eslint/**"
     ]
   },
   "scripts": {
-    "lint": "ultra -r lint",
+    "lint": "eslint ./packages --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "ultra -r lint:fix",
     "reset": "find . -type dir -name node_modules | xargs rm -rf && rm -rf yarn.lock",
-    "build": "yarn build-shared",
+    "build": "lerna run build",
     "build-shared": "yarn workspace @poeta/shared build",
     "build-react-native-shared": "yarn workspace @poeta/react-native-shared build"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.17.0",
-    "@typescript-eslint/eslint-plugin": "^5.58.0",
-    "@typescript-eslint/parser": "^5.19.0",
+    "eslint": "^8.38",
+    "@babel/core": "^7.20.0",
+    "@babel/preset-env": "^7.20.0",
+    "@babel/runtime": "^7.20.0",
+    "@react-native-community/eslint-config": "^3.2.0",
     "babel-plugin-module-resolver": "^5.0.0",
-    "eslint": "^7.32.0",
-    "typescript": "4.4.4"
+    "prettier": "^2.4.1",
+    "typescript": "4.8.4",
+    "lerna": "^4.0.0"
   },
   "resolutions": {
     "extensions/**/lodash": "^4.17.21",
