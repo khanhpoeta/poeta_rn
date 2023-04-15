@@ -1,11 +1,9 @@
-
-
 export enum ObjectStatus {
-  Active = "active",
-  Archived = "archived",
-  Pending = "pending",
-  Canceled = "canceled",
-  Deleted = "deleted",
+  Active = 'active',
+  Archived = 'archived',
+  Pending = 'pending',
+  Canceled = 'canceled',
+  Deleted = 'deleted',
 }
 export interface IApiObject {
   id: number;
@@ -25,14 +23,14 @@ export interface ITokenBE {
 }
 
 export enum ModelType {
-  prescription = "prescription",
-  insurance = "insurance",
-  user = "user",
+  prescription = 'prescription',
+  insurance = 'insurance',
+  user = 'user',
 }
 
 export enum FileType {
-  images = "images",
-  pdf = "pdf",
+  images = 'images',
+  pdf = 'pdf',
 }
 
 export interface IUploadFile {

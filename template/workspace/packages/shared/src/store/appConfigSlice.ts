@@ -1,10 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { DefaultDALCollection } from "../dal/SharedDALCollection";
-import { IAppConfig } from "../models";
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {DefaultDALCollection} from '../dal/SharedDALCollection';
+import {IAppConfig} from '../models';
 
 export const fetchConfig = createAsyncThunk(
-  "fetchAppConfig",
-  async (request: {}, { rejectWithValue }) => {
+  'fetchAppConfig',
+  async (_, {rejectWithValue}) => {
     const response = await DefaultDALCollection.getDALCollection()
       .getAppConfigDAL()
       .getAlls();
@@ -12,16 +12,18 @@ export const fetchConfig = createAsyncThunk(
       return response.data;
     } else if (response.error) {
       return rejectWithValue(response.error);
+    } else {
+      return rejectWithValue(null);
     }
-  }
+  },
 );
 
 const slice = createSlice({
-  name: "appConfig",
+  name: 'appConfig',
   initialState: {} as IAppConfig,
   reducers: {},
   extraReducers(builder) {
-    builder.addCase(fetchConfig.fulfilled, (state, action) => {
+    builder.addCase(fetchConfig.fulfilled, (_, action) => {
       return action.payload;
     });
   },

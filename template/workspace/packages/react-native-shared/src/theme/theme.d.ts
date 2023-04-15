@@ -1,5 +1,5 @@
 import Variables from './Variables';
-import { DefaultVariables, Fonts, Gutters, Images, Layout } from './index';
+import {DefaultVariables, Fonts, Gutters, Images, Layout} from './index';
 
 export type ThemeVariables = {
   Colors: typeof Variables.Colors;

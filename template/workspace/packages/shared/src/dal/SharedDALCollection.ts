@@ -1,8 +1,4 @@
-import {
-  UserDAL,
-  FileDAL,
-  AppConfigDAL,
-} from "./index";
+import {UserDAL, FileDAL, AppConfigDAL} from './index';
 
 interface IDALCollection {
   getAppConfigDAL: () => AppConfigDAL;
@@ -39,9 +35,6 @@ export class SharedDALCollection implements IDALCollection {
 
 export class DefaultDALCollection implements IDALCollection {
   private static dalCollection: SharedDALCollection;
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  private constructor() {}
 
   private ensureDalCollection(): SharedDALCollection {
     if (!DefaultDALCollection.dalCollection) {

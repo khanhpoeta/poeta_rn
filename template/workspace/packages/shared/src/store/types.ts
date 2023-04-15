@@ -1,8 +1,8 @@
 export const ThunkStatus = {
-  Idle: "idle",
-  Pending: "pending",
-  Fulfilled: "fulfilled",
-  Rejected: "rejected",
+  Idle: 'idle',
+  Pending: 'pending',
+  Fulfilled: 'fulfilled',
+  Rejected: 'rejected',
 } as const;
 
 type ThunkStatusKey = keyof typeof ThunkStatus;

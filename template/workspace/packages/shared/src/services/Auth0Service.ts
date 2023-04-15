@@ -1,6 +1,6 @@
-import Auth0 from "react-native-auth0";
-import Config from "react-native-config";
-import { ISignUpUser } from "../models";
+import Auth0 from 'react-native-auth0';
+import Config from 'react-native-config';
+import {ISignUpUser} from '../models';
 
 function auth0() {
   return new Auth0({
@@ -9,7 +9,7 @@ function auth0() {
   });
 }
 
-const auth0Connection = "Username-Password-Authentication";
+const auth0Connection = 'Username-Password-Authentication';
 
 export async function loginAuth0(email: string, password: string) {
   return auth0().auth.passwordRealm({
@@ -25,9 +25,8 @@ export const signUpAuth0 = <T>(user: ISignUpUser<T>) => {
     username: user.email,
     password: user.password,
     connection: auth0Connection,
-    metadata: user.metadata
+    metadata: user.metadata,
   });
-  
 };
 
 export const resetPasswordAuth0 = (email: string) => {
@@ -38,5 +37,5 @@ export const resetPasswordAuth0 = (email: string) => {
 };
 
 export const userInfo = (accessToken: string) => {
-  return auth0().auth.userInfo({token: accessToken})
+  return auth0().auth.userInfo({token: accessToken});
 };

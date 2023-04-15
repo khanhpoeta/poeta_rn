@@ -1,2 +1,2 @@
-export * from "./Auth0Service";
-export * from "./AnalyticsService";
+export * from './Auth0Service';
+export * from './AnalyticsService';

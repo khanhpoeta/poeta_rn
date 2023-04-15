@@ -1,2 +1,2 @@
-export * from "./APIObjectViewModel";
-export * from "./UserProfileViewModel";
+export * from './APIObjectViewModel';
+export * from './UserProfileViewModel';

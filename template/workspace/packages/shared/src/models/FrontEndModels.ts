@@ -1,12 +1,9 @@
-import {
-  IImageBE,
-  IUserBE,
-} from "./BackEndModels";
+import {IImageBE, IUserBE} from './BackEndModels';
 
 export enum SortDirection {
-  Asc = "ASC",
-  Desc = "DESC",
-  None = "NONE",
+  Asc = 'ASC',
+  Desc = 'DESC',
+  None = 'NONE',
 }
 
 export interface ISortData {
@@ -40,4 +37,3 @@ export interface IToken {
 export interface IImage extends IImageBE {
   externalProp?: string;
 }
-

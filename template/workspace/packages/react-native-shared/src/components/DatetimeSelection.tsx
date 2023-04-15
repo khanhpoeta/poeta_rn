@@ -1,8 +1,8 @@
 import DatePicker from 'react-native-date-picker';
-import { Icon, Input, InputProps, Theme } from '@rneui/base';
-import { format } from 'date-fns';
-import React, { LegacyRef, Ref, createRef, useRef } from 'react';
-import { TextInput } from 'react-native';
+import {Icon, Input, InputProps, Theme} from '@rneui/base';
+import {format} from 'date-fns';
+import React, {LegacyRef, Ref} from 'react';
+import {TextInput} from 'react-native';
 
 interface IDateTimeSelectionProps extends InputProps {
   /**
@@ -30,15 +30,15 @@ interface IDatetimeSelectionState {
 }
 
 export class DatetimeSelection extends React.Component<
-  IDateTimeSelectionProps & { theme?: Theme },
+  IDateTimeSelectionProps & {theme?: Theme},
   IDatetimeSelectionState
 > {
   static displayName = 'DatetimeSelection';
-  textInput: React.RefObject<Input> | undefined;
+  textInput: React.RefObject<Input>;
 
   constructor(props: IDateTimeSelectionProps) {
     super(props);
-    this.textInput = React.createRef();
+    this.textInput = React.createRef<Input>();
 
     this.state = {
       open: false,
@@ -67,11 +67,11 @@ export class DatetimeSelection extends React.Component<
       } else {
         onDateChange(undefined);
       }
-      this.setState({ open: false, date: date });
+      this.setState({open: false, date: date});
     };
 
     const blur = () => {
-      this.setState({ open: false });
+      this.setState({open: false});
       this.textInput.current.blur();
     };
 
@@ -83,13 +83,13 @@ export class DatetimeSelection extends React.Component<
             this.state.date
               ? format(
                   this.state.date,
-                  this.state.datetimeFormat ?? 'yyyy-MM-dd'
+                  this.state.datetimeFormat ?? 'yyyy-MM-dd',
                 )
               : ''
           }
           onBlur={onBlur}
           onPressIn={() => {
-            this.setState({ open: true });
+            this.setState({open: true});
           }}
           clearButtonMode="never"
           errorMessage={errorMessage}
@@ -119,7 +119,7 @@ export class DatetimeSelection extends React.Component<
           maximumDate={maxDate}
           open={this.state.open}
           date={this.state.date ?? new Date()}
-          onConfirm={(date) => {
+          onConfirm={date => {
             onSelectionChange(date);
           }}
           onCancel={blur}

@@ -1,5 +1,5 @@
-import { IUser } from "../models/FrontEndModels";
-import { ApiObjectViewModel } from "./APIObjectViewModel";
+import {IUser} from '../models/FrontEndModels';
+import {ApiObjectViewModel} from './APIObjectViewModel';
 
 export class PatientProfileViewModel extends ApiObjectViewModel {
   first_name: string;
@@ -28,9 +28,9 @@ export class PatientProfileViewModel extends ApiObjectViewModel {
   }
 
   static createFromExistingCollection(
-    source: PatientProfileViewModel[] | IUser[]
+    source: PatientProfileViewModel[] | IUser[],
   ) {
-    return source.map((m) => {
+    return source.map(m => {
       return this.createFromExisting(m);
     });
   }

@@ -23,9 +23,9 @@
     "allowJs": true,
     "baseUrl": "./src",
     "paths": {
-      "@poeta/shared/*": ["@nupharma/shared/build/*"],
-      "@poeta/reactshared/*": ["@nupharma/react-native-shared/build/*"],
-      "@/*": ["./src"]
+      "@poeta/*": ["@poeta/shared/build/*"],
+      "@poeta/react-native/*": ["@poeta/react-native-shared/build/*"],
+      "@/*": ["./src/*"]
     }
   },
   "exclude": [

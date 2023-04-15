@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   View,
   Image as RNImage,
@@ -7,8 +7,8 @@ import {
   ActivityIndicator,
   ViewStyle,
   StyleProp,
-} from "react-native";
-import FastImage from "react-native-fast-image";
+} from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 export interface ImageProps {
   /**
@@ -70,15 +70,15 @@ export function Image(props: ImageProps) {
             style={style}
             source={{
               uri: url,
-              cache: "force-cache",
+              cache: 'force-cache',
             }}
             onLoadEnd={() => setIsLoading(false)}
-            resizeMode={"cover"}
+            resizeMode={'cover'}
           />
         )}
         {isLoading && (
           <View style={styles.indicatorView}>
-            <ActivityIndicator color={"#CB997E"} size="small" />
+            <ActivityIndicator color={'#CB997E'} size="small" />
           </View>
         )}
         {children}
@@ -87,17 +87,14 @@ export function Image(props: ImageProps) {
   }
 
   if (image) {
-    return (
-      <View style={containerStyle}>
-      </View>
-    );
+    return <View style={containerStyle} />;
   }
   return <View />;
 }
 
 const styles = StyleSheet.create({
   root: {
-    resizeMode: "contain",
+    resizeMode: 'contain',
   },
   indicatorView: {
     ...StyleSheet.absoluteFillObject,
@@ -105,7 +102,7 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

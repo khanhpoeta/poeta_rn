@@ -1,10 +1,10 @@
 /**
  * This file contains all application's style relative to fonts
  */
-import { StyleSheet } from 'react-native';
-import { ThemeVariables } from './theme';
+import {StyleSheet} from 'react-native';
+import {ThemeVariables} from './theme';
 
-export default function ({ FontSize, FontWeight }: ThemeVariables) {
+export default function ({FontSize, FontWeight}: ThemeVariables) {
   return StyleSheet.create({
     xsRegular: {
       fontSize: FontSize.xs,

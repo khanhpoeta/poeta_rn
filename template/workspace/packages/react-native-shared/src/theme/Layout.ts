@@ -1,6 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { ThemeVariables } from './theme';
-import { Colors } from './Variables';
+import {StyleSheet} from 'react-native';
+import {ThemeVariables} from './theme';
 
 export default function ({}: ThemeVariables) {
   return StyleSheet.create({
@@ -107,13 +106,13 @@ export default function ({}: ThemeVariables) {
     },
     /* Operation Layout */
     mirror: {
-      transform: [{ scaleX: -1 }],
+      transform: [{scaleX: -1}],
     },
     rotate90: {
-      transform: [{ rotate: '90deg' }],
+      transform: [{rotate: '90deg'}],
     },
     rotate90Inverse: {
-      transform: [{ rotate: '-90deg' }],
+      transform: [{rotate: '-90deg'}],
     },
     lineHorizontal: {
       width: '100%',

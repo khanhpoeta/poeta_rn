@@ -3,19 +3,19 @@ import {
   createEntityAdapter,
   createSelector,
   createSlice,
-} from "@reduxjs/toolkit";
-import { RootState } from "./index";
-import { FirebaseMessagingTypes } from "@react-native-firebase/messaging";
-import type { PayloadAction } from "@reduxjs/toolkit";
+} from '@reduxjs/toolkit';
+import {RootState} from './index';
+import {FirebaseMessagingTypes} from '@react-native-firebase/messaging';
+import type {PayloadAction} from '@reduxjs/toolkit';
 
 export interface INotification extends FirebaseMessagingTypes.RemoteMessage {
   isRead: boolean;
 }
 
-export const resetAll = createAction("RESET_ALL");
+export const resetAll = createAction('RESET_ALL');
 
 const notificationAdapter = createEntityAdapter<INotification>({
-  selectId: (item) => item.messageId!,
+  selectId: item => item.messageId!,
 });
 
 const initialState = notificationAdapter.getInitialState({
@@ -24,7 +24,7 @@ const initialState = notificationAdapter.getInitialState({
 });
 
 const slice = createSlice({
-  name: "notification",
+  name: 'notification',
   initialState,
   reducers: {
     updateNotification: (state, action: PayloadAction<INotification>) => {
@@ -43,7 +43,7 @@ const slice = createSlice({
 });
 
 export const reducer = slice.reducer;
-export const { updateNotification, updateToken } = slice.actions;
+export const {updateNotification, updateToken} = slice.actions;
 
 export const selecNotificationStatusThunkStatus = createSelector(
   (state: RootState) => {
@@ -52,5 +52,5 @@ export const selecNotificationStatusThunkStatus = createSelector(
       token: state.notification.token,
     };
   },
-  (result) => result
+  result => result,
 );

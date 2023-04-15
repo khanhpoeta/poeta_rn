@@ -5,9 +5,11 @@
     "outDir": "build",
     "declaration": true,
     "composite": true,
-    "rootDir": "src",
+    "baseUrl": "./src",
     "paths": {
-      "@/*": ["./src"]
+      "@poeta/*": ["@poeta/shared/build/*"],
+      "@poeta/react-native/*": ["@poeta/react-native-shared/build/*"],
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src/*.tsx", "src/**/*.tsx", "src/**/*.ts", "src/index.ts"],

@@ -1,4 +1,4 @@
-import { IApiObject, ObjectStatus } from "../models/BackEndModels";
+import {IApiObject, ObjectStatus} from '../models/BackEndModels';
 
 export class ApiObjectViewModel {
   public id?: number;
