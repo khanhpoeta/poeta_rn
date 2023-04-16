@@ -15,8 +15,10 @@
     "build": "npx tsc"
   },
   "dependencies": {
+    "@types/ejs": "^3.1.2",
     "app-root-path": "^3.1.0",
     "commander": "^10.0.0",
+    "ejs": "^3.1.9",
     "figlet": "^1.6.0",
     "kleur": "^4.1.4",
     "prompts": "^2.4.1"

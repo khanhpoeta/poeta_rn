@@ -98,14 +98,14 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.patient"
+    namespace "com.project_name"
     defaultConfig {
         applicationId project.env.get("APP_ID")
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode project.env.get("VERSION_CODE").toInteger()
         versionName project.env.get("VERSION")
-        resValue "string", "build_config_package", "com.patient"
+        resValue "string", "build_config_package", "com.project_name"
         manifestPlaceholders = [auth0Domain: project.env.get("AUTH0_DOMAIN"), auth0Scheme: project.env.get("APP_ID")]
     }
 

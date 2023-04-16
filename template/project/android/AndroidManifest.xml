@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.patient">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.project_name">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <application
@@ -13,13 +13,6 @@
             android:value="false"
             tools:replace="android:value"
         />
-      <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@mipmap/ic_stat_name" />
-      <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/appColor"
-            tools:replace="android:resource" />
       <activity
         android:name=".MainActivity"
         android:label="@string/APP_NAME"
