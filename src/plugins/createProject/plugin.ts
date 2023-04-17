@@ -35,9 +35,9 @@ export async function apply(value: any, previousValue: any):Promise<void> {
     case ProjectType.web:
       
       await execSync(`
-      bash configuration.sh ${projectRootFolder(podFile)} ${value} ${currentProjectFolder(podFile)} &&
-      bash configuration.sh ${projectRootFolder('android/AndroidManifest.xml')} ${value} ${currentProjectFolder(manifest)} &&
-      bash configuration.sh ${projectRootFolder('android/build.gradle')} ${value} ${currentProjectFolder(gradle)}`, { stdio: 'inherit' });
+      bash ${appRoot.path}/configuration.sh ${projectRootFolder(podFile)} ${value} ${currentProjectFolder(podFile)} &&
+      bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/AndroidManifest.xml')} ${value} ${currentProjectFolder(manifest)} &&
+      bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/build.gradle')} ${value} ${currentProjectFolder(gradle)}`, { stdio: 'inherit' });
       break;
   }
  
