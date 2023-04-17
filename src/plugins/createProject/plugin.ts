@@ -20,8 +20,12 @@ export async function apply(value: any, previousValue: any):Promise<void> {
     return `${appRoot.path}/template/project/${path}`;
   }
 
-  const currentProjectFolder = (path:string) =>{
-    return `${currentDirectory}/${value}/${path}`;
+  const currentProjectFolder = (path?:string) =>{
+    if(path || path !== '')
+    {
+      return `${currentDirectory}/${value}/${path}`;
+    }
+    return  `${currentDirectory}/${value}`;
   }
   const podFile = 'ios/Podfile';
   const manifest = 'android/app/src/main/AndroidManifest.xml';
@@ -34,7 +38,8 @@ export async function apply(value: any, previousValue: any):Promise<void> {
       npx react-native@latest init ${value} --template git+ssh://git@bitbucket.org:poetaadmin/codebase.mobile.git#master &&
       bash ${appRoot.path}/configuration.sh ${projectRootFolder(podFile)} ${value} ${currentProjectFolder(podFile)} &&
       bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/AndroidManifest.xml')} ${value} ${currentProjectFolder(manifest)} &&
-      bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/build.gradle')} ${value} ${currentProjectFolder(gradle)}
+      bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/build.gradle')} ${value} ${currentProjectFolder(gradle)} &&
+      cp -r ${projectRootFolder('react-native-xcode.sh')} ${currentProjectFolder('')}
       `, { stdio: 'inherit' });
       break;
     case ProjectType.web:
