@@ -43,6 +43,25 @@ export async function apply(value: any, previousValue: any):Promise<void> {
       `, { stdio: 'inherit' });
       break;
     case ProjectType.web:
+      fs.readFile(`${appRoot.path+'/template/workspace'}/package.json`, 'utf8', (err, data) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        const packageJson = JSON.parse(data);
+        const workspaces = packageJson['workspaces'];
+        const packages = workspaces['packages'] as string[];
+        packages.push(value);
+        const scripts = packageJson['scripts'];
+        scripts[`${value}:pods`] = `yarn workspace ${value} pods`;
+        scripts[`${value}:start`] = `yarn workspace ${value} start`;
+        scripts[`${value}:ios`] = `[  -z "$env" ] && env=qc yarn workspace ${value} ios || env=$env yarn workspace ${value} ios`;
+        scripts[`${value}:android`] = `[  -z "$env" ] && env=qc yarn workspace abcd android $env || env=$env yarn workspace abcd android $env`;
+        fs.writeFile(`${currentDirectory}/package.json`, JSON.stringify(packageJson, null, 2), (err) => {
+            console.log(err);
+        });
+        console.log(packageJson);
+      });
       break;
   }
  

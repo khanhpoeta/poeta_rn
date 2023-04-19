@@ -62,7 +62,7 @@
   "engineStrict": true,
   "importSort": {
     ".js, .jsx, .ts, .tsx": {
-      "style": "nupharma",
+      "style": "poeta",
       "parser": "typescript"
     }
   }
