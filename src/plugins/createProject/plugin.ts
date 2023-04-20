@@ -59,7 +59,6 @@ export async function apply(value: any, previousValue: any):Promise<void> {
         fs.writeFile(`${currentDirectory}/package.json`, JSON.stringify(packageJson, null, 2), (err) => {
             console.log(err);
         });
-        console.log(packageJson);
       });
       break;
     case ProjectType.web:
