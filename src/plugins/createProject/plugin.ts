@@ -2,7 +2,7 @@ import { execSync } from 'child_process';
 import fs from 'fs';
 import { ProjectType } from '../chooseProjectType/_prompts';
 import spinners from 'cli-spinners';
-import { green } from 'kleur';
+import { green, blue } from 'kleur';
 
 export async function apply(value: any, previousValue: any):Promise<void> {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -75,7 +75,10 @@ export async function apply(value: any, previousValue: any):Promise<void> {
           return;
         }
         const content = data;
-        fs.writeFile(`${currentProjectFolder(`ios/${value}.xcodeproj/project.pbxproj`)}`, content.replace("set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n","set -e\n\nWITH_ENVIRONMENT=\"../../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n"), (err) => {
+        const replaceWithEnvironment = content.replace("../node_modules/react-native/scripts/xcode/with-environment.sh","../../node_modules/react-native/scripts/xcode/with-environment.sh");
+        const replaceReactNativeXcode = replaceWithEnvironment.replace("../node_modules/react-native/scripts/react-native-xcode.sh","../react-native-xcode.sh");
+        console.log(replaceReactNativeXcode);
+        fs.writeFile(`${currentProjectFolder(`ios/${value}.xcodeproj/project.pbxproj`)}`, replaceReactNativeXcode, () => {
             resolve();
         });
       });
@@ -98,6 +101,11 @@ export async function apply(value: any, previousValue: any):Promise<void> {
       });
       break;
     case ProjectType.web:
+      console.log(
+        `${blue(
+          'comming soon!'
+        )}`,
+      );
       break;
   }
  
