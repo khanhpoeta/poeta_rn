@@ -35,15 +35,14 @@ export async function apply(value: any, previousValue: any):Promise<void> {
   {
     case ProjectType.native:
       await execSync(`
-      npx react-native@latest init ${value} --template git+ssh://git@bitbucket.org:poetaadmin/codebase.mobile.git#master &&
+      npx react-native@latest init ${value} --template git+ssh://git@bitbucket.org:poetaadmin/codebase.mobile.git#template &&
       bash ${appRoot.path}/configuration.sh ${projectRootFolder(podFile)} ${value} ${currentProjectFolder(podFile)} &&
       bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/AndroidManifest.xml')} ${value} ${currentProjectFolder(manifest)} &&
       bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/build.gradle')} ${value} ${currentProjectFolder(gradle)} &&
+      bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/settings.gradle')} ${value} ${currentProjectFolder('android/settings.gradle')} &&
       cp -r ${projectRootFolder('react-native-xcode.sh')} ${currentProjectFolder('')}
       `, { stdio: 'inherit' });
-      break;
-    case ProjectType.web:
-      fs.readFile(`${appRoot.path+'/template/workspace'}/package.json`, 'utf8', (err, data) => {
+      fs.readFile(`${currentDirectory}/package.json`, 'utf8', (err, data) => {
         if (err) {
           console.error(err);
           return;
@@ -54,7 +53,7 @@ export async function apply(value: any, previousValue: any):Promise<void> {
         packages.push(value);
         const scripts = packageJson['scripts'];
         scripts[`${value}:pods`] = `yarn workspace ${value} pods`;
-        scripts[`${value}:start`] = `yarn workspace ${value} start`;
+        scripts[`${value}:start`] = `[  -z "$env" ] && env=qc yarn workspace ${value} start || env=$env yarn workspace ${value} start`;
         scripts[`${value}:ios`] = `[  -z "$env" ] && env=qc yarn workspace ${value} ios || env=$env yarn workspace ${value} ios`;
         scripts[`${value}:android`] = `[  -z "$env" ] && env=qc yarn workspace abcd android $env || env=$env yarn workspace abcd android $env`;
         fs.writeFile(`${currentDirectory}/package.json`, JSON.stringify(packageJson, null, 2), (err) => {
@@ -62,6 +61,8 @@ export async function apply(value: any, previousValue: any):Promise<void> {
         });
         console.log(packageJson);
       });
+      break;
+    case ProjectType.web:
       break;
   }
  
