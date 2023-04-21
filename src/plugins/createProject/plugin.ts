@@ -91,7 +91,6 @@ export async function apply(value: any, previousValue: any):Promise<void> {
           return;
         }
         const launchJson = JSON.parse(data);
-        console.log(launchJson);
         const configurations = launchJson['configurations'] as ILaunch[];
         configurations.push({
           preLaunchTask: `${value}_android`, 
@@ -116,7 +115,6 @@ export async function apply(value: any, previousValue: any):Promise<void> {
           return;
         }
         const taskJson = JSON.parse(data);
-        console.log(taskJson);
         const tasks = taskJson['tasks'] as ITask[];
         tasks.push({
           label: `${value}_android`, 
@@ -141,7 +139,6 @@ export async function apply(value: any, previousValue: any):Promise<void> {
         const content = data;
         const replaceWithEnvironment = content.replace("../node_modules/react-native/scripts/xcode/with-environment.sh","../../node_modules/react-native/scripts/xcode/with-environment.sh");
         const replaceReactNativeXcode = replaceWithEnvironment.replace("../node_modules/react-native/scripts/react-native-xcode.sh","../react-native-xcode.sh");
-        console.log(replaceReactNativeXcode);
         fs.writeFile(`${currentProjectFolder(`ios/${value}.xcodeproj/project.pbxproj`)}`, replaceReactNativeXcode, () => {
             resolve();
         });
@@ -152,9 +149,8 @@ export async function apply(value: any, previousValue: any):Promise<void> {
   switch(projectType)
   {
     case ProjectType.native:
-      console.log(spinners.fingerDance);
+      console.log(spinners.dots);
       await copyResource();
-      console.log(spinners.fingerDance, 'configuration ...');
       Promise.all([replaceWorkspacePackageContent(), replaceXcodeProjectConfig(), configTaskVSCode(), configLaunchVSCode()])
       .then(() => {
         console.log(
