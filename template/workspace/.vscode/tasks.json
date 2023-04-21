@@ -1,14 +1,4 @@
 {
   "version": "2.0.0",
-  "tasks": [
-    {
-      "label": "copyEnv",
-      "command": "cp", // Could be any other shell command
-      "args": [
-        "${workspaceFolder}/doctor/src/Config/dev.env",
-        "${workspaceFolder}/doctor/.env"
-      ],
-      "type": "shell"
-    }
-  ]
+  "tasks": []
 }

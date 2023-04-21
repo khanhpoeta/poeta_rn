@@ -4,6 +4,22 @@ import { ProjectType } from '../chooseProjectType/_prompts';
 import spinners from 'cli-spinners';
 import { green, blue } from 'kleur';
 
+interface ILaunch {
+  preLaunchTask: string;
+  name: string;
+  request: string;
+  type: string;
+  cwd: string;
+  platform: string;
+}
+
+interface ITask {
+  label: string;
+  command: string;
+  args: string[];
+  type: string;
+}
+
 export async function apply(value: any, previousValue: any):Promise<void> {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const appRoot = require('app-root-path');
@@ -67,6 +83,54 @@ export async function apply(value: any, previousValue: any):Promise<void> {
     })
   }
 
+  const configLaunchVSCode = ():Promise<void> => {
+    return new Promise<void>((resolve) => {
+      fs.readFile(`${currentDirectory}/.vscode/launch.json`, 'utf8', (err, data) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        const launchJson = JSON.parse(data);
+        console.log(launchJson);
+        const configurations = launchJson['configurations'] as ILaunch[];
+        configurations.push({
+          preLaunchTask: `${value}_android`, 
+          name: `Android ${value}`,
+          request: 'launch',
+          type: 'reactnativedirect',
+          cwd: `/${value}`,
+          platform: 'android'
+        })
+        fs.writeFile(`${currentDirectory}/.vscode/launch.json`, JSON.stringify(launchJson, null, 2), (err) => {
+            resolve();
+        });
+      });
+    })
+  }
+
+  const configTaskVSCode = ():Promise<void> => {
+    return new Promise<void>((resolve) => {
+      fs.readFile(`${currentDirectory}/.vscode/tasks.json`, 'utf8', (err, data) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        const taskJson = JSON.parse(data);
+        console.log(taskJson);
+        const tasks = taskJson['tasks'] as ITask[];
+        tasks.push({
+          label: `${value}_android`, 
+          command: `yarn ${value}:android`,
+          args: [],
+          type: 'shell',
+        })
+        fs.writeFile(`${currentDirectory}/.vscode/tasks.json`, JSON.stringify(taskJson, null, 2), (err) => {
+            resolve();
+        });
+      });
+    })
+  }
+
   const replaceXcodeProjectConfig = ():Promise<void> => {
     return new Promise<void>((resolve) => {
       fs.readFile(`${currentProjectFolder(`ios/${value}.xcodeproj/project.pbxproj`)}`, 'utf8', (err, data) => {
@@ -91,7 +155,7 @@ export async function apply(value: any, previousValue: any):Promise<void> {
       console.log(spinners.fingerDance);
       await copyResource();
       console.log(spinners.fingerDance, 'configuration ...');
-      Promise.all([replaceWorkspacePackageContent(), replaceXcodeProjectConfig()])
+      Promise.all([replaceWorkspacePackageContent(), replaceXcodeProjectConfig(), configTaskVSCode(), configLaunchVSCode()])
       .then(() => {
         console.log(
           `${green(
