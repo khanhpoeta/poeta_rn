@@ -1,10 +1,5 @@
-export enum ObjectStatus {
-  Active = 'active',
-  Archived = 'archived',
-  Pending = 'pending',
-  Canceled = 'canceled',
-  Deleted = 'deleted',
-}
+import {ModelType, FileType, ObjectStatus} from '../constant/enum';
+
 export interface IApiObject {
   id: number;
   status?: ObjectStatus;
@@ -20,17 +15,6 @@ export interface ISystemObject extends IApiObject {
 export interface ITokenBE {
   id_token?: string;
   type?: string;
-}
-
-export enum ModelType {
-  prescription = 'prescription',
-  insurance = 'insurance',
-  user = 'user',
-}
-
-export enum FileType {
-  images = 'images',
-  pdf = 'pdf',
 }
 
 export interface IUploadFile {

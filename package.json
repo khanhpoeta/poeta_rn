@@ -22,6 +22,7 @@
     "ejs": "^3.1.9",
     "figlet": "^1.6.0",
     "kleur": "^4.1.4",
+    "lodash": "^4.17.21",
     "prompts": "^2.4.1"
   },
   "devDependencies": {
@@ -31,6 +32,7 @@
     "@commitlint/cz-commitlint": "^16.0.0",
     "@commitlint/prompt-cli": "^16.0.0",
     "@types/figlet": "^1.5.5",
+    "@types/lodash": "^4.14.194",
     "@types/prompts": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "^5.58.0",
     "@typescript-eslint/parser": "^5.19.0",

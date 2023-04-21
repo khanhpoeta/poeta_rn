@@ -1,0 +1,49 @@
+import {<% dals.forEach(dal => { %><%-dal.className %>,<% }) %>} from './index';
+
+
+interface IDALCollection {
+<% dals.forEach(dal => { %>
+  get<%-dal.className %>: () => <%-dal.className %>;
+<% }) %> 
+};
+
+
+export class SharedDALCollection implements IDALCollection {
+
+<% dals.forEach(dal => { %>
+  private <%-dal.variable %>?: <%-dal.className %>;
+<% }) %> 
+<% dals.forEach(dal => { %>
+  public get<%-dal.className %> = () => {
+    if (!this.<%-dal.variable %>) {
+      this.<%-dal.variable %> = new <%-dal.className %>();
+    }
+    return this.<%-dal.variable %>;
+  };
+<% }) %> 
+}
+
+export class DefaultDALCollection implements IDALCollection {
+
+  private static dalCollection: SharedDALCollection;
+
+  private ensureDalCollection(): SharedDALCollection {
+    if (!DefaultDALCollection.dalCollection) {
+      DefaultDALCollection.dalCollection = new SharedDALCollection();
+    }
+    return DefaultDALCollection.dalCollection;
+  }
+
+  public static getDALCollection(): SharedDALCollection {
+    if (!DefaultDALCollection.dalCollection) {
+      DefaultDALCollection.dalCollection = new SharedDALCollection();
+    }
+    return DefaultDALCollection.dalCollection;
+  }
+  
+<% dals.forEach(dal => { %>
+  get<%-dal.className %> = () => {
+    return this.ensureDalCollection().get<%-dal.className %>();
+  };
+<% }) %> 
+}

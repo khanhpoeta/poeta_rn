@@ -1,4 +1,4 @@
-import { PromptObject, PromptType } from "prompts";
+import { PromptObject } from "prompts";
 
 export enum ProjectType{
   native = 'native',
@@ -9,5 +9,5 @@ export default {
   name: 'value',
   type: 'text',
   color: 'blue',
-  message: 'Input your project name',
+  message: 'Input your project name: ',
 } as PromptObject;
