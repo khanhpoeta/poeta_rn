@@ -10,9 +10,7 @@
     "lint": "eslint ./packages --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "ultra -r lint:fix",
     "reset": "find . -type dir -name node_modules | xargs rm -rf && rm -rf yarn.lock",
-    "build": "lerna run build",
-    "build-shared": "lerna run build --scope=@poeta/shared",
-    "build-react-native-shared": "yarn workspace @poeta/react-native-shared build"
+    "build": "lerna run build"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
