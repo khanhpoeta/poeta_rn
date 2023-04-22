@@ -3,6 +3,7 @@ import fs from 'fs';
 import { ProjectType } from '../chooseProjectType/_prompts';
 import spinners from 'cli-spinners';
 import { green, blue } from 'kleur';
+import * as path from 'path';
 
 interface ILaunch {
   preLaunchTask: string;
@@ -23,7 +24,7 @@ interface ITask {
 export async function apply(value: any, previousValue: any):Promise<void> {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const appRoot = require('app-root-path');
-  const currentDirectory = process.cwd();
+  const currentDirectory: string = path.resolve();
   try {
     fs.lstatSync(`${currentDirectory}/packages`).isDirectory();
   }
