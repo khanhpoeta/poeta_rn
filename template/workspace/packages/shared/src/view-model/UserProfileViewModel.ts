@@ -1,4 +1,4 @@
-import {IUser} from '../models/FrontEndModels';
+import {IUser} from '@/models/FrontEndModels';
 import {ApiObjectViewModel} from './APIObjectViewModel';
 
 export class PatientProfileViewModel extends ApiObjectViewModel {

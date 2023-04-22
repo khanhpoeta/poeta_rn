@@ -4,7 +4,7 @@ import {
   DataResponse,
   IAppConfig,
   IKeyValue,
-} from '../../models';
+} from '@/models';
 import {BaseDAL} from '../BaseDAL';
 
 export class AppConfigDAL extends BaseDAL {

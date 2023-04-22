@@ -1,6 +1,6 @@
 import Auth0 from 'react-native-auth0';
 import Config from 'react-native-config';
-import {ISignUpUser} from '../models';
+import {ISignUpUser} from '@/models';
 
 function auth0() {
   return new Auth0({

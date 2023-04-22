@@ -10,7 +10,10 @@
     "outDir": "build" /* Redirect output structure to the directory. */,
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "exclude": ["build", "**/test/*.ts", "**/__mock__/*.ts"]
 }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {authClient} from './HttpClient';
 import Config from 'react-native-config';
-import {APIResponse, DataListResponse, DataResponse} from '../models';
+import {APIResponse, DataListResponse, DataResponse} from '@/models';
 
 /// <reference />
 export abstract class BaseDAL {

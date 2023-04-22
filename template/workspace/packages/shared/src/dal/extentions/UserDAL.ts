@@ -1,4 +1,4 @@
-import {ITokenBE, IToken} from '../../models';
+import {ITokenBE, IToken} from '@/models';
 import {BaseDAL} from '../BaseDAL';
 
 export class UserDAL extends BaseDAL {

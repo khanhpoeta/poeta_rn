@@ -1,5 +1,5 @@
 import {IImageBE, IUserBE} from './BackEndModels';
-import {SortDirection} from '../constant/enum';
+import {SortDirection} from '@/constant/enum';
 
 export interface ISortData {
   sortGridBy: string;

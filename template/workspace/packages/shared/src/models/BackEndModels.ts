@@ -1,4 +1,4 @@
-import {ModelType, FileType, ObjectStatus} from '../constant/enum';
+import {ModelType, FileType, ObjectStatus} from '@/constant/enum';
 
 export interface IApiObject {
   id: number;

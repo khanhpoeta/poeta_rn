@@ -1,4 +1,4 @@
-import { IUploadFile, IImageBE, IImage } from "../../models";
+import { IUploadFile, IImageBE, IImage } from "@/models";
 import { BaseDAL } from "../BaseDAL";
 
 export class FileDAL extends BaseDAL {

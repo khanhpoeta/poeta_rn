@@ -1,15 +1,18 @@
 {
   "env": {
-    "es6": true
+    "es2020": true
   },
-  "extends": ["@react-native-community"],
   "root": true,
-  "settings": {
-    "import/resolver": {
-      "@poeta/*": ["@poeta/shared/build/*"],
-      "@poeta/react-native/*": ["@poeta/react-native-shared/build/*"],
-      "@/*": ["./src/*"],
-      "babel-module": {}
-    }
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 11
+  },
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "@typescript-eslint/no-non-null-assertion": 0,
+    "@typescript-eslint/ban-types": 0,
+    "@typescript-eslint/explicit-module-boundary-types": ["off"],
+    "@typescript-eslint/no-explicit-any": ["off"]
   }
 }

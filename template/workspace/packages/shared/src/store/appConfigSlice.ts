@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {DefaultDALCollection} from '../dal/SharedDALCollection';
-import {IAppConfig} from '../models';
+import {DefaultDALCollection} from '@/dal/SharedDALCollection';
+import {IAppConfig} from '@/models';
 
 export const fetchConfig = createAsyncThunk(
   'fetchAppConfig',
