@@ -7,32 +7,44 @@ export const useAuth0 = () => {
   const authContext = useAuth();
 
   const login = useCallback(
-    async (userName: string, password: string, params?: any) => {
-      const responseAuth0 = await loginAuth0(userName.trim(), password.trim());
-      const idToken = responseAuth0.idToken;
-      const userDAL = DefaultDALCollection.getDALCollection().getUserDAL();
-      const response = await userDAL.generateUserToken({
-        ...params,
-        id_token: idToken,
-      });
-      const token = response.data;
-      await authContext?.updateAuthState({
-        accessToken: token.access_token,
-        refreshToken: token.refresh_token,
-        authenticated: true,
+    (userName: string, password: string, params?: any) => {
+      return new Promise<void>((resolve, reject) => {
+        loginAuth0(userName.trim(), password.trim())
+          .then(responseAuth0 => {
+            const idToken = responseAuth0.idToken;
+            return DefaultDALCollection.getDALCollection()
+              .getUserDAL()
+              .generateUserToken({
+                ...params,
+                id_token: idToken,
+              });
+          })
+          .then(async response => {
+            const token = response.data;
+            await authContext?.updateAuthState({
+              accessToken: token.access_token,
+              refreshToken: token.refresh_token,
+              authenticated: true,
+            });
+            resolve();
+          })
+          .catch(error => reject(error));
       });
     },
-    [],
+    [authContext],
   );
 
   const signUp = useCallback(
     async (userName: string, password: string, metadata?: any) => {
-      const signupResponse = await signUpAuth0({
-        email: userName,
-        password: password,
-        metadata,
+      return new Promise((resolve, reject) => {
+        signUpAuth0({
+          email: userName,
+          password: password,
+          metadata,
+        })
+          .then(signupResponse => resolve(signupResponse))
+          .catch(error => reject(error));
       });
-      return signupResponse;
     },
     [],
   );

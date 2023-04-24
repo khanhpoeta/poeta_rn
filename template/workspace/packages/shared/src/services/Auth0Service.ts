@@ -11,13 +11,13 @@ function auth0() {
 
 const auth0Connection = 'Username-Password-Authentication';
 
-export async function loginAuth0(email: string, password: string) {
+export const loginAuth0 = (email: string, password: string) => {
   return auth0().auth.passwordRealm({
     username: email,
     password: password,
     realm: auth0Connection,
   });
-}
+};
 
 export const signUpAuth0 = <T>(user: ISignUpUser<T>) => {
   return auth0().auth.createUser({
