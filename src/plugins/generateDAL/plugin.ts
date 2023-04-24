@@ -1,8 +1,8 @@
 
 import fs from "fs";
-import { blue } from 'kleur';
 import {camelCase} from 'lodash';
 import {renderFile} from 'ejs';
+import {currentProjectFolder, projectRootFolder} from "@/utils";
 
 interface DALInfo{
   className: string,
@@ -10,22 +10,6 @@ interface DALInfo{
 }
 
 export async function apply():Promise<void> {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const appRoot = require('app-root-path');
-  const currentDirectory = process.cwd();
-
-  const projectRootFolder = (path:string) =>{
-    return `${appRoot.path}/template/project/${path}`;
-  }
-
-  const currentProjectFolder = (path?:string) =>{
-    if(path || path !== '')
-    {
-      return `${currentDirectory}/${path}`;
-    }
-    return  `${currentDirectory}`;
-  }  
-
   return new Promise<void>((resolve) => {
     fs.readdir(`${currentProjectFolder('packages/shared/src/dal/extentions')}`, (_error,files) => {
       const dals: DALInfo[] = [];
