@@ -3,7 +3,7 @@ import fs from 'fs';
 import { ProjectType } from '../chooseProjectType/_prompts';
 import spinners from 'cli-spinners';
 import { green, blue } from 'kleur';
-import { appRoot, currentDirectory, currentProjectFolder, projectRootFolder } from '@/utils';
+import { appRoot, currentDirectory, projectRootFolder } from '../utils';
 
 interface ILaunch {
   preLaunchTask: string;
@@ -23,7 +23,6 @@ interface ITask {
 
 export async function apply(value: any, previousValue: any):Promise<void> {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-
   try {
     fs.lstatSync(`${currentDirectory}/packages`).isDirectory();
   }
@@ -33,7 +32,13 @@ export async function apply(value: any, previousValue: any):Promise<void> {
 
   const projectType = previousValue as ProjectType;
 
-
+  const currentProjectFolder = (path?:string) =>{
+    if(path || path !== '')
+    {
+      return `${currentDirectory}/${value}/${path}`;
+    }
+    return  `${currentDirectory}/${value}`;
+  }
   const podFile = 'ios/Podfile';
   const manifest = 'android/app/src/main/AndroidManifest.xml';
   const gradle = 'android/app/build.gradle';
@@ -41,12 +46,12 @@ export async function apply(value: any, previousValue: any):Promise<void> {
   const copyResource = async ()=> {
     await execSync(`
     npx react-native@latest init ${value} --template git+ssh://git@bitbucket.org:poetaadmin/codebase.mobile.git#template &&
-    bash ${appRoot.path}/configuration.sh ${projectRootFolder(podFile)} ${value} ${currentProjectFolder(`${value}/${podFile}`)} &&
-    bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/AndroidManifest.xml')} ${value} ${currentProjectFolder(`${value}/${manifest}`)} &&
-    bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/build.gradle')} ${value} ${currentProjectFolder(`${value}/${gradle}`)} &&
-    bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/settings.gradle')} ${value} ${currentProjectFolder(`${value}/android/settings.gradle`)} &&
-    cp -r ${projectRootFolder('react-native-xcode.sh')} ${currentProjectFolder(`${value}`)} &&
-    cp -r ${projectRootFolder('android/gradle.properties')} ${currentProjectFolder(`${value}/android`)}
+    bash ${appRoot.path}/configuration.sh ${projectRootFolder(podFile)} ${value} ${currentProjectFolder(podFile)} &&
+    bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/AndroidManifest.xml')} ${value} ${currentProjectFolder(manifest)} &&
+    bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/build.gradle')} ${value} ${currentProjectFolder(gradle)} &&
+    bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/settings.gradle')} ${value} ${currentProjectFolder('android/settings.gradle')} &&
+    cp -r ${projectRootFolder('react-native-xcode.sh')} ${currentProjectFolder('')} &&
+    cp -r ${projectRootFolder('android/gradle.properties')} ${currentProjectFolder('android')}
     `, { stdio: 'inherit' });
   }
 
@@ -121,7 +126,7 @@ export async function apply(value: any, previousValue: any):Promise<void> {
 
   const replaceXcodeProjectConfig = ():Promise<void> => {
     return new Promise<void>((resolve) => {
-      fs.readFile(`${currentProjectFolder(`${value}/ios/${value}.xcodeproj/project.pbxproj`)}`, 'utf8', (err, data) => {
+      fs.readFile(`${currentProjectFolder(`ios/${value}.xcodeproj/project.pbxproj`)}`, 'utf8', (err, data) => {
         if (err) {
           console.error(err);
           return;
@@ -129,7 +134,7 @@ export async function apply(value: any, previousValue: any):Promise<void> {
         const content = data;
         const replaceWithEnvironment = content.replace("../node_modules/react-native/scripts/xcode/with-environment.sh","../../node_modules/react-native/scripts/xcode/with-environment.sh");
         const replaceReactNativeXcode = replaceWithEnvironment.replace("../node_modules/react-native/scripts/react-native-xcode.sh","../react-native-xcode.sh");
-        fs.writeFile(`${currentProjectFolder(`${value}/ios/${value}.xcodeproj/project.pbxproj`)}`, replaceReactNativeXcode, () => {
+        fs.writeFile(`${currentProjectFolder(`ios/${value}.xcodeproj/project.pbxproj`)}`, replaceReactNativeXcode, () => {
             resolve();
         });
       });

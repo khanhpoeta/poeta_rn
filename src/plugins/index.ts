@@ -1,5 +1,5 @@
 import prompts from 'prompts';
-import { IPlugin } from '@/models/IPlugin';
+import { IPlugin } from '@/models';
 
 /**
  * Apply a plugin

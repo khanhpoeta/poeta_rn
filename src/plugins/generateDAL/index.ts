@@ -1,4 +1,4 @@
-import { IPlugin } from '@/models/IPlugin';
+import { IPlugin } from '@/models';
 import { apply } from './plugin';
 
 

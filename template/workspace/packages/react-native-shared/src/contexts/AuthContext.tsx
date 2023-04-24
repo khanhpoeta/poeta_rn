@@ -135,7 +135,7 @@ const AuthProvider = (props: IAuthProviderProps) => {
 
   // Restore tokens at start up
   const restoreTokens = useCallback(() => {
-    return new Promise<void>(async (resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       try {
         Keychain.getGenericPassword().then(result => {
           if (result) {

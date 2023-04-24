@@ -2,7 +2,7 @@
 import fs from "fs";
 import {camelCase} from 'lodash';
 import {renderFile} from 'ejs';
-import {currentProjectFolder, projectRootFolder} from "@/utils";
+import {currentProjectFolder, projectRootFolder} from "../utils";
 
 interface DALInfo{
   className: string,
