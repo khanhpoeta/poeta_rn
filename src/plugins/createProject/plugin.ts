@@ -3,7 +3,6 @@ import fs from 'fs';
 import { ProjectType } from '../chooseProjectType/_prompts';
 import spinners from 'cli-spinners';
 import { green, blue } from 'kleur';
-import * as path from 'path';
 import { appRoot, currentDirectory, projectRootFolder } from '../utils';
 
 interface ILaunch {
@@ -63,6 +62,10 @@ export async function apply(value: any, previousValue: any):Promise<void> {
       cp -r ${projectRootFolder('android/gradle.properties')} ${currentProjectFolder('android')}
       `, { stdio: 'inherit' });
     }
+  }
+
+  const installPackages = async ()=> {
+    await execSync(`yarn && yarn build`, { stdio: 'inherit' });
   }
 
   const replaceWorkspacePackageContent = ():Promise<void> => {
@@ -163,7 +166,8 @@ export async function apply(value: any, previousValue: any):Promise<void> {
       console.log(spinners.dots);
       await copyResource();
       Promise.all([replaceWorkspacePackageContent(), replaceXcodeProjectConfig(), configTaskVSCode(), configLaunchVSCode()])
-      .then(() => {
+      .then(async () => {
+        await installPackages();
         console.log(
           `${green(
             'completed'
