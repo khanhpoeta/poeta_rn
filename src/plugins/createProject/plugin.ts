@@ -69,9 +69,9 @@ export async function apply(value: any, previousValue: any):Promise<void> {
         packages.push(value);
         const scripts = packageJson['scripts'];
         scripts[`${value}:pods`] = `yarn workspace ${value} pods`;
-        scripts[`${value}:start`] = `[  -z "$env" ] && env=qc yarn workspace ${value} start || env=$env yarn workspace ${value} start`;
-        scripts[`${value}:ios`] = `[  -z "$env" ] && env=qc yarn workspace ${value} ios || env=$env yarn workspace ${value} ios`;
-        scripts[`${value}:android`] = `[  -z "$env" ] && env=qc yarn workspace ${value} android $env || env=$env yarn workspace ${value} android $env`;
+        scripts[`${value}:start`] = `[ -z "$env" ] && env=qc yarn workspace ${value} start || env=$env yarn workspace ${value} start`;
+        scripts[`${value}:ios`] = `[ -z "$env" ] && env=qc yarn workspace ${value} ios || env=$env yarn workspace ${value} ios`;
+        scripts[`${value}:android`] = `[ -z "$env" ] && env=qc yarn workspace ${value} android || env=$env yarn workspace ${value} android`;
         fs.writeFile(`${currentDirectory}/package.json`, JSON.stringify(packageJson, null, 2), (err) => {
             resolve();
         });
