@@ -1,23 +1,26 @@
 {
-  "extends": "../../tsconfig",
+  "display": "React Native",
   "compilerOptions": {
-    "allowJs": true /* Allow javascript files to be compiled. */,
-    "outDir": "build",
-    "declaration": true,
-    "composite": true,
-    "baseUrl": "./src",
+    "target": "esnext",
+    "module": "commonjs",
+    "types": ["react-native", "jest"],
+    "lib": ["es2019"],
+    "allowJs": true,
+    "jsx": "react-native",
+    "noEmit": true,
+    "isolatedModules": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "rootDir": "src" /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */,
+    "outDir": "build" /* Redirect output structure to the directory. */,
     "paths": {
-      "@poeta/*": ["@poeta/shared/build/*"],
-      "@poeta/react-native/*": ["@poeta/react-native-shared/build/*"],
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src/*.tsx", "src/**/*.tsx", "src/**/*.ts", "src/index.ts"],
-  "exclude": [
-    "build",
-    "node_modules",
-    "babel.config.ts",
-    "jest.config.ts",
-    "src/index.d.ts"
-  ]
+  "exclude": ["build", "node_modules", "babel.config.ts", "jest.config.ts"]
 }

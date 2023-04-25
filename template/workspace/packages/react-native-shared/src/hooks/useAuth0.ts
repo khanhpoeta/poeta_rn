@@ -1,5 +1,9 @@
 import {useCallback} from 'react';
-import {loginAuth0, signUpAuth0} from '@poeta/shared/build/services';
+import {
+  loginAuth0,
+  signUpAuth0,
+  resetPasswordAuth0,
+} from '@poeta/shared/build/services';
 import {DefaultDALCollection} from '@poeta/shared/build/dal';
 import {useAuth} from './useAuth';
 
@@ -49,5 +53,13 @@ export const useAuth0 = () => {
     [],
   );
 
-  return {login, signUp};
+  const resetPass = useCallback(async (userName: string) => {
+    return new Promise((resolve, reject) => {
+      resetPasswordAuth0(userName)
+        .then(response => resolve(response))
+        .catch(error => reject(error));
+    });
+  }, []);
+
+  return {login, signUp, resetPass};
 };

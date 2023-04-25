@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "description": "Poeta React Native Library",
-  "main": "build/index.ts",
+  "main": "build/index.js",
   "types": "build/index.d.ts",
   "prepublish": "tsc --composite false",
   "files": [
