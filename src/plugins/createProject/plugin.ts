@@ -28,7 +28,11 @@ export async function apply(value: any, previousValue: any):Promise<void> {
     fs.lstatSync(`${currentDirectory}/packages`).isDirectory();
   }
   catch {
-    await execSync(`cp -a ${appRoot.path+'/template/workspace/.'} ${currentDirectory}`, { stdio: 'pipe' });
+    await execSync(`
+    git clone --branch packages git@bitbucket.org:poetaadmin/codebase.mobile.git && 
+    rm -rf codebase.mobile/.git &&
+    cd codebase.mobile && mv $(ls -a --ignore=. --ignore=..) .. && cd ..
+    rm -rf codebase.mobile`, { stdio: 'inherit' });
   }
 
   const projectType = previousValue as ProjectType;
@@ -45,15 +49,20 @@ export async function apply(value: any, previousValue: any):Promise<void> {
   const gradle = 'android/app/build.gradle';
 
   const copyResource = async ()=> {
-    await execSync(`
-    npx react-native@latest init ${value} --template git+ssh://git@bitbucket.org:poetaadmin/codebase.mobile.git#template &&
-    bash ${appRoot.path}/configuration.sh ${projectRootFolder(podFile)} ${value} ${currentProjectFolder(podFile)} &&
-    bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/AndroidManifest.xml')} ${value} ${currentProjectFolder(manifest)} &&
-    bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/build.gradle')} ${value} ${currentProjectFolder(gradle)} &&
-    bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/settings.gradle')} ${value} ${currentProjectFolder('android/settings.gradle')} &&
-    cp -r ${projectRootFolder('react-native-xcode.sh')} ${currentProjectFolder('')} &&
-    cp -r ${projectRootFolder('android/gradle.properties')} ${currentProjectFolder('android')}
-    `, { stdio: 'inherit' });
+    try {
+      fs.lstatSync(`${currentDirectory}/${value}`).isDirectory();
+    }
+    catch{
+      await execSync(`
+      npx react-native@latest init ${value} --template git+ssh://git@bitbucket.org:poetaadmin/codebase.mobile.git#template &&
+      bash ${appRoot.path}/configuration.sh ${projectRootFolder(podFile)} ${value} ${currentProjectFolder(podFile)} &&
+      bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/AndroidManifest.xml')} ${value} ${currentProjectFolder(manifest)} &&
+      bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/build.gradle')} ${value} ${currentProjectFolder(gradle)} &&
+      bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/settings.gradle')} ${value} ${currentProjectFolder('android/settings.gradle')} &&
+      cp -r ${projectRootFolder('react-native-xcode.sh')} ${currentProjectFolder('')} &&
+      cp -r ${projectRootFolder('android/gradle.properties')} ${currentProjectFolder('android')}
+      `, { stdio: 'inherit' });
+    }
   }
 
   const replaceWorkspacePackageContent = ():Promise<void> => {
@@ -88,14 +97,17 @@ export async function apply(value: any, previousValue: any):Promise<void> {
         }
         const launchJson = JSON.parse(data);
         const configurations = launchJson['configurations'] as ILaunch[];
-        configurations.push({
-          preLaunchTask: `${value}_android`, 
-          name: `Android ${value}`,
-          request: 'launch',
-          type: 'reactnativedirect',
-          cwd: `/${value}`,
-          platform: 'android'
-        })
+        if (configurations.filter(configuration => configuration.preLaunchTask === `${value}_android`).length === 0)
+        {
+          configurations.push({
+            preLaunchTask: `${value}_android`, 
+            name: `Android ${value}`,
+            request: 'launch',
+            type: 'reactnativedirect',
+            cwd: `/${value}`,
+            platform: 'android'
+          })
+        }
         fs.writeFile(`${currentDirectory}/.vscode/launch.json`, JSON.stringify(launchJson, null, 2), (err) => {
             resolve();
         });
@@ -112,12 +124,15 @@ export async function apply(value: any, previousValue: any):Promise<void> {
         }
         const taskJson = JSON.parse(data);
         const tasks = taskJson['tasks'] as ITask[];
-        tasks.push({
-          label: `${value}_android`, 
-          command: `yarn ${value}:android`,
-          args: [],
-          type: 'shell',
-        })
+        if (tasks.filter(task => task.label === `${value}_android`).length === 0)
+        {
+          tasks.push({
+            label: `${value}_android`, 
+            command: `yarn ${value}:android`,
+            args: [],
+            type: 'shell',
+          })
+        }
         fs.writeFile(`${currentDirectory}/.vscode/tasks.json`, JSON.stringify(taskJson, null, 2), (err) => {
             resolve();
         });
