@@ -72,7 +72,7 @@ export class DatetimeSelection extends React.Component<
 
     const blur = () => {
       this.setState({open: false});
-      this.textInput.current.blur();
+      this.textInput.current?.blur();
     };
 
     return (

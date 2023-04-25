@@ -149,10 +149,9 @@ const AuthProvider = (props: IAuthProviderProps) => {
                 refreshToken: jwt.refreshToken,
                 authenticated: true,
               });
-              resolve();
             }
           }
-          reject();
+          resolve();
         });
       } catch (error: any) {
         reject(error);

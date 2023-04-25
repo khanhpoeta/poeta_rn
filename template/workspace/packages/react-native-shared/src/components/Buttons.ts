@@ -1,5 +1,5 @@
+import {CommonParams} from '@/theme/theme';
 import {StyleSheet} from 'react-native';
-import {CommonParams} from 'theme/theme';
 
 export default function <C>({Colors, Gutters, Layout}: CommonParams<C>) {
   const base = {
