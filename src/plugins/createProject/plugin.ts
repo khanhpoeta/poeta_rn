@@ -3,6 +3,7 @@ import fs from 'fs';
 import { ProjectType } from '../chooseProjectType/_prompts';
 import spinners from 'cli-spinners';
 import { green, blue } from 'kleur';
+import * as path from 'path';
 import { appRoot, currentDirectory, projectRootFolder } from '../utils';
 
 interface ILaunch {

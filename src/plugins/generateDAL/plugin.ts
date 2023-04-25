@@ -3,6 +3,7 @@ import fs from "fs";
 import {camelCase} from 'lodash';
 import {renderFile} from 'ejs';
 import {currentProjectFolder, projectRootFolder} from "../utils";
+import {green} from "kleur";
 
 interface DALInfo{
   className: string,
@@ -10,7 +11,7 @@ interface DALInfo{
 }
 
 export async function apply():Promise<void> {
-  return new Promise<void>((resolve) => {
+  return new Promise<void>((resolve, reject) => {
     fs.readdir(`${currentProjectFolder('packages/shared/src/dal/extentions')}`, (_error,files) => {
       const dals: DALInfo[] = [];
       files.sort().forEach(file => {
@@ -21,9 +22,17 @@ export async function apply():Promise<void> {
         })
       })
       renderFile(`${projectRootFolder('dal/SharedDALCollection.ejs')}`,{dals}).then(resonse => {
-        console.log(resonse);
         fs.writeFile(`${currentProjectFolder('packages/shared/src/dal/SharedDALCollection.ts')}`, resonse, (err) => {
-          console.log(err);
+          if(err)
+          {
+            reject(err);
+            console.log(err);
+          }
+          console.log(
+            `${green(
+              'completed'
+            )}`,
+          );
           resolve();
         });
       }).catch(error => console.log(error));
