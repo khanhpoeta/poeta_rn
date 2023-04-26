@@ -16,7 +16,7 @@ program
   .description("React Native Boilerplate")
   .option("-l, --lp", "List projects")
   .option("-mp, --mkpro", "Create a project")
-  .option("-md, --mkdal", "Generate shared Dal")
+  .option("-rdal, --mkdal", "Reload shared DAL")
   .description("PHP Boilerplate")
   .parse(process.argv);
 

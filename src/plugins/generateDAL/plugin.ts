@@ -4,6 +4,7 @@ import {camelCase} from 'lodash';
 import {renderFile} from 'ejs';
 import {currentProjectFolder, projectRootFolder} from "../utils";
 import {green} from "kleur";
+import { ProjectType } from "../createProject/_prompts";
 
 interface DALInfo{
   className: string,
@@ -21,7 +22,7 @@ export async function apply():Promise<void> {
           variable: camelCase(className)
         })
       })
-      renderFile(`${projectRootFolder('dal/SharedDALCollection.ejs')}`,{dals}).then(resonse => {
+      renderFile(`${projectRootFolder(ProjectType.native, 'dal/SharedDALCollection.ejs')}`,{dals}).then(resonse => {
         fs.writeFile(`${currentProjectFolder('packages/shared/src/dal/SharedDALCollection.ts')}`, resonse, (err) => {
           if(err)
           {

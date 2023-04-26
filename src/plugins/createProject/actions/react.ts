@@ -1,6 +1,7 @@
 import { appRoot, currentDirectory, projectRootFolder } from "../../utils";
 import { execSync } from 'child_process';
 import fs from 'fs';
+import { ProjectType } from "../_prompts";
 
 interface ILaunch {
     preLaunchTask: string;
@@ -43,19 +44,19 @@ export const clonePackage = async () => {
     }
 }
 
-export const copyResource = async (value:string)=> {
+export const copyResource = async (projectType:string, value:string)=> {
     try {
       fs.lstatSync(`${currentDirectory}/${value}`).isDirectory();
     }
     catch{
       await execSync(`
       npx react-native@latest init ${value} --template git+ssh://git@bitbucket.org:poetaadmin/codebase.mobile.git#template &&
-      bash ${appRoot.path}/configuration.sh ${projectRootFolder(podFile)} ${value} ${currentProjectFolder(value,podFile)} &&
-      bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/AndroidManifest.xml')} ${value} ${currentProjectFolder(value,manifest)} &&
-      bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/build.gradle')} ${value} ${currentProjectFolder(value,gradle)} &&
-      bash ${appRoot.path}/configuration.sh ${projectRootFolder('android/settings.gradle')} ${value} ${currentProjectFolder(value,'android/settings.gradle')} &&
-      cp -r ${projectRootFolder('react-native-xcode.sh')} ${currentProjectFolder(value,'')} &&
-      cp -r ${projectRootFolder('android/gradle.properties')} ${currentProjectFolder(value,'android')}
+      bash ${appRoot.path}/configuration.sh ${projectRootFolder(projectType, podFile)} ${value} ${currentProjectFolder(value,podFile)} &&
+      bash ${appRoot.path}/configuration.sh ${projectRootFolder(projectType, 'android/AndroidManifest.xml')} ${value} ${currentProjectFolder(value,manifest)} &&
+      bash ${appRoot.path}/configuration.sh ${projectRootFolder(projectType, 'android/build.gradle')} ${value} ${currentProjectFolder(value,gradle)} &&
+      bash ${appRoot.path}/configuration.sh ${projectRootFolder(projectType, 'android/settings.gradle')} ${value} ${currentProjectFolder(value,'android/settings.gradle')} &&
+      cp -r ${projectRootFolder(projectType, 'react-native-xcode.sh')} ${currentProjectFolder(value,'')} &&
+      cp -r ${projectRootFolder(projectType, 'android/gradle.properties')} ${currentProjectFolder(value,'android')}
       `, { stdio: 'inherit' });
     }
 }

@@ -6,8 +6,8 @@ export const appRoot = require('app-root-path');
 export const currentDirectory: string = path.resolve();
 
 
-export const projectRootFolder = (path:string) =>{
-  return `${appRoot.path}/template/project/${path}`;
+export const projectRootFolder = (projectType:string, path:string) =>{
+  return `${appRoot.path}/template/${projectType}/${path}`;
 }
 
 export const currentProjectFolder = (path?:string) =>{

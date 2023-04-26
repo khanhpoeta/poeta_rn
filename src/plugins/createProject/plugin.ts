@@ -22,7 +22,7 @@ export async function apply(value: any, previousValues: IResponse[]):Promise<voi
   {
     case ProjectType.native:
       await clonePackage();
-      await copyResource(value);
+      await copyResource(projectType,value);
       Promise.all([replaceWorkspacePackageContent(value), replaceXcodeProjectConfig(value), configTaskVSCode(value), configLaunchVSCode(value)])
       .then(async () => {
         await installPackages();
