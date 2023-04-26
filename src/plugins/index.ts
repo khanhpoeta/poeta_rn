@@ -26,9 +26,9 @@ async function applyPlugin(plugin: IPlugin, responses: IResponse[]) {
     return await apply(value, responses);
   }
   if(response)
-    {
-      response.value = undefined;
-    }
+  {
+    response.value = undefined;
+  }
   return await apply(null, responses);
 }
 
