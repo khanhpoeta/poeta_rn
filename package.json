@@ -10,7 +10,7 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "bin": {
-    "poeta-rn": "./build/index.js"
+    "poeta": "./build/index.js"
   },
   "scripts": {
     "build": "npx tsc"

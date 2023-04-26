@@ -30,8 +30,8 @@ yarn global add poeta
 
 Assuming you have all the requirements installed, you can run the project by running:
 
-- `poeta-rn -h` to show help
-- `poeta-rn -mp` to create a new react project
+- `poeta -h` to show help
+- `poeta -mp` to create a new react project
 
 ## License
 
