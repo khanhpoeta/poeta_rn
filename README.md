@@ -20,12 +20,12 @@ Follow instructions for your given `development OS` and `target OS`.
 Install the package to global
 
 ```
-npm install -g poeta-rn
+npm install -g poeta
 ```
 or 
 
 ```
-yarn global add poeta-rn
+yarn global add poeta
 ```
 
 Assuming you have all the requirements installed, you can run the project by running:

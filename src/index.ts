@@ -13,10 +13,11 @@ console.log(figlet.textSync("Poeta Boilerplate"));
 
 program
   .version("1.0.0")
-  .description("A Poeta React Native Boilerplate")
+  .description("React Native Boilerplate")
   .option("-l, --lp", "List projects")
   .option("-mp, --mkpro", "Create a project")
-  .option("-mdal, --mkdal", "Generate shared Dal")
+  .option("-md, --mkdal", "Generate shared Dal")
+  .description("PHP Boilerplate")
   .parse(process.argv);
 
 const options = program.opts();
