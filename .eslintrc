@@ -9,6 +9,12 @@
       "sourceType": "module"
     },
     "plugins": ["@typescript-eslint"],
+    "settings": {
+      "import/resolver": {
+        "@/*": ["./src/*"],
+        "babel-module": {}
+      }
+    },
     "rules": {
       "@typescript-eslint/no-non-null-assertion": 0,
       "@typescript-eslint/ban-types": 0,

@@ -1,5 +1,5 @@
 {
-  "display": "React Native",
+  "display": "Poeta Boilerplate",
   "_version": "0.0.1",
   "compilerOptions": {
     "target": "esnext",
@@ -12,10 +12,8 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "paths": {
-      "@/*": [
-          "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   },
-  "exclude": ["build", "template", "**/test/*.ts", "**/__mock__/*.ts"]
+  "exclude": ["build", "**/test/*.ts", "**/__mock__/*.ts"]
 }

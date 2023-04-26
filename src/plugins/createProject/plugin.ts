@@ -4,6 +4,8 @@ import { ProjectType } from '../chooseProjectType/_prompts';
 import spinners from 'cli-spinners';
 import { green, blue } from 'kleur';
 import { appRoot, currentDirectory, projectRootFolder } from '../utils';
+import { IResponse } from '@/models';
+import { PluginActions } from '../../constants';
 
 interface ILaunch {
   preLaunchTask: string;
@@ -21,7 +23,7 @@ interface ITask {
   type: string;
 }
 
-export async function apply(value: any, previousValue: any):Promise<void> {
+export async function apply(value: any, previousValues: IResponse[]):Promise<void> {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   try {
     fs.lstatSync(`${currentDirectory}/packages`).isDirectory();
@@ -34,7 +36,9 @@ export async function apply(value: any, previousValue: any):Promise<void> {
     rm -rf codebase.mobile`, { stdio: 'inherit' });
   }
 
-  const projectType = previousValue as ProjectType;
+  console.log(previousValues);
+
+  const projectType = previousValues.filter(res => res.name === PluginActions.ChooseProjectType).shift()?.value as ProjectType;
 
   const currentProjectFolder = (path?:string) =>{
     if(path || path !== '')

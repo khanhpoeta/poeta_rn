@@ -1,5 +1,6 @@
 import prompts from 'prompts';
 import { IPlugin } from '@/models';
+import { IResponse } from '@/models';
 
 /**
  * Apply a plugin
@@ -9,18 +10,33 @@ import { IPlugin } from '@/models';
  * @param response: previous prompt response
  * @return {Promise<*>}
  */
-async function applyPlugin(plugin: IPlugin, response: any) {
+
+
+async function applyPlugin(plugin: IPlugin, responses: IResponse[]) {
   const {option,apply} = plugin;
+  const response = responses.filter(res => res.name === plugin.name).shift();
+    
   if(option)
   {
     const {value} = await prompts(option);
-    return await apply(value, response);
+    if(response)
+    {
+      response.value = value;
+    }
+    return await apply(value, responses);
   }
-  return await apply(null, response);
+  if(response)
+    {
+      response.value = undefined;
+    }
+  return await apply(null, responses);
 }
 
 export async function applyPlugins(plugins: IPlugin[]) {
+  const responses: IResponse[] = [];
   return plugins.reduce((p, plugin) => {
-    return p.then(async (response) => await applyPlugin(plugin,response));
+    return p.then(async (response) => {
+      responses.push({name:plugin.name,value:response});
+      return await applyPlugin(plugin,responses)});
  }, Promise.resolve());
 }

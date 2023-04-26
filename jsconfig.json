@@ -1,9 +1,8 @@
 {
     "compilerOptions": {
+        "rootDir": "build",
         "paths": {
-            "@/*": [
-                "./src/*"
-            ]
+            "@/*": ["./src/*"]
         }
     }
 }

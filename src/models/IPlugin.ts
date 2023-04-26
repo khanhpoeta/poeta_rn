@@ -1,7 +1,9 @@
+import { PluginActions } from "@/constants";
 import { PromptObject } from "prompts";
+import { IResponse } from "./IResponse";
 
 export interface IPlugin {
-    name: string,
+    name: PluginActions,
     option: PromptObject | undefined,
-    apply(value:any, response: any): Promise<void>
+    apply(value:any, previousValues: IResponse[]): Promise<void>
 }

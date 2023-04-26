@@ -1,4 +1,4 @@
-import { PromptObject, PromptType } from "prompts";
+import { PromptObject } from "prompts";
 
 export enum ProjectType{
   native = 'native',

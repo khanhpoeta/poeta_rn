@@ -7,7 +7,8 @@
     "url": "git@bitbucket.org/poetaadmin/codebase.mobile.git"
   },
   "license": "Poeta",
-  "main": ".build/index.js",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
   "bin": {
     "poeta-rn": "./build/index.js"
   },
