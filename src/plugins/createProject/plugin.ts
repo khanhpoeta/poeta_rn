@@ -36,8 +36,6 @@ export async function apply(value: any, previousValues: IResponse[]):Promise<voi
     rm -rf codebase.mobile`, { stdio: 'inherit' });
   }
 
-  console.log(previousValues);
-
   const projectType = previousValues.filter(res => res.name === PluginActions.ChooseProjectType).shift()?.value as ProjectType;
 
   const currentProjectFolder = (path?:string) =>{
