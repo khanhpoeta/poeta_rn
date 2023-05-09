@@ -2,7 +2,8 @@ import { PromptObject } from "prompts";
 
 export enum ProjectType{
   native = 'native',
-  web = 'web'
+  web = 'web',
+  php = 'php'
 }
 
 export default {
@@ -12,14 +13,19 @@ export default {
   message: 'Choose the project type',
   choices: [
     {
-      title:'native', 
+      title: ProjectType.native, 
       selected: false,
       value: ProjectType.native
     },
     {
-      title:'web', 
+      title: ProjectType.web, 
       selected: false,
       value: ProjectType.web
+    },
+    {
+      title: ProjectType.php, 
+      selected: false,
+      value: ProjectType.php
     }
   ],
 } as PromptObject;

@@ -1,7 +1,6 @@
 import { appRoot, currentDirectory, projectRootFolder } from "../../utils";
 import { execSync } from 'child_process';
 import fs from 'fs';
-import { ProjectType } from "../_prompts";
 
 interface ILaunch {
     preLaunchTask: string;
@@ -81,6 +80,8 @@ export const replaceWorkspacePackageContent = (value:string):Promise<void> => {
         scripts[`${value}:start`] = `[ -z "$env" ] && env=qc yarn workspace ${value} start || env=$env yarn workspace ${value} start`;
         scripts[`${value}:ios`] = `[ -z "$env" ] && env=qc yarn workspace ${value} ios || env=$env yarn workspace ${value} ios`;
         scripts[`${value}:android`] = `[ -z "$env" ] && env=qc yarn workspace ${value} android || env=$env yarn workspace ${value} android`;
+        scripts[`${value}:release_ios`] = `[ -z "$env" ] && env=qc yarn workspace ${value} release:ios || env=$env yarn workspace ${value} release:ios`;
+        scripts[`${value}:release_android`] = `[ -z "$env" ] && env=qc yarn workspace ${value} release:android || env=$env yarn workspace ${value} release:android`;
         fs.writeFile(`${currentDirectory}/package.json`, JSON.stringify(packageJson, null, 2), (err) => {
             resolve();
         });
