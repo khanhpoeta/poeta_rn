@@ -4,7 +4,7 @@ import {camelCase} from 'lodash';
 import {renderFile} from 'ejs';
 import {currentProjectFolder, projectRootFolder} from "../utils";
 import {green} from "kleur";
-import { ProjectType } from "../createProject/_prompts";
+import { ProjectType } from "../../constants";
 
 interface DALInfo{
   className: string,

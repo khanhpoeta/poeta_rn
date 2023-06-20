@@ -1,10 +1,5 @@
+import { ProjectType } from "../../constants";
 import { PromptObject } from "prompts";
-
-export enum ProjectType{
-  native = 'native',
-  web = 'web',
-  php = 'php'
-}
 
 export default {
   name: 'value',

@@ -5,3 +5,9 @@ export enum PluginActions {
     GenerateDAL = 'GenerateDAL',
     ListProject = 'ListProject',
   }
+
+  export enum ProjectType{
+    native = 'native',
+    web = 'web',
+    php = 'php'
+  }

@@ -1,9 +1,5 @@
 import { PromptObject } from "prompts";
 
-export enum ProjectType{
-  native = 'native',
-  web = 'web'
-}
 
 export default {
   name: 'value',

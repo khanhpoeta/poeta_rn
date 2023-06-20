@@ -1,7 +1,7 @@
-import { ProjectType } from '../chooseProjectType/_prompts';
+
 import { green, blue } from 'kleur';
 import { IResponse } from '@/models';
-import { PluginActions } from '../../constants';
+import { PluginActions, ProjectType } from '../../constants';
 import { 
   clonePackage, 
   configLaunchVSCode, 
@@ -11,8 +11,6 @@ import {
   replaceWorkspacePackageContent, 
   replaceXcodeProjectConfig 
 } from './actions/react';
-
-
 
 export async function apply(value: any, previousValues: IResponse[]):Promise<void> {
 
