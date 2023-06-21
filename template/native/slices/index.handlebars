@@ -1,0 +1,81 @@
+import {
+  configureStore,
+  combineReducers,
+  ThunkDispatch,
+} from "@reduxjs/toolkit";
+import { setupListeners } from "@reduxjs/toolkit/query";
+import { Storage } from "redux-persist/es/types";
+import {
+  persistReducer,
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import type { CombinedState } from "@reduxjs/toolkit";
+{{#each slices}}
+import { reducer as {{firstLower this.className}}Reducer } from "./{{this.className}}Slice";
+{{/each}}
+
+
+type CleanState<T> = T extends CombinedState<infer S>
+  ? { [K in keyof S]: CleanState<S[K]> }
+  : T;
+
+export {
+{{#each slices}}
+ {{firstLower this.className}}Reducer,
+{{/each}}
+};
+
+const reducers = combineReducers({
+{{#each slices}}
+ {{firstLower this.className}}: {{firstLower this.className}}Reducer,
+{{/each}}
+});
+
+interface IPersistConfig {
+  storage: Storage;
+  whitelist: string[];
+}
+
+export const createStore = (persistConfig: IPersistConfig, reducer: any) => {
+  const persistedReducer = persistReducer(
+    { key: "root", ...persistConfig },
+    reducer
+  );
+
+  const store = configureStore({
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) => {
+      const middlewares = getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      });
+
+      // if (__DEV__ && !process.env.JEST_WORKER_ID) {
+      //   const createDebugger = require('redux-flipper').default
+      //   middlewares.push(createDebugger())
+      // }
+
+      return middlewares;
+    },
+  });
+
+  const persistor = persistStore(store);
+
+  setupListeners(store.dispatch);
+
+  return { store, persistor };
+};
+
+export type RootState = CleanState<ReturnType<typeof reducers>>;
+export const useAppDispatch: () => ThunkDispatch<RootState, any, any> =
+  useDispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+export * from "./types";
