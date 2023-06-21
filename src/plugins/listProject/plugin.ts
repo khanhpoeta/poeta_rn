@@ -1,11 +1,12 @@
 
+import { StepStatus } from '../../models';
 import fs from "fs";
 import { blue } from 'kleur';
 
-export async function apply():Promise<void> {
+export async function apply():Promise<StepStatus> {
   const currentDirectory = process.cwd();
 
-  return new Promise<void>((resolve) => {
+  return new Promise<StepStatus>((resolve) => {
     fs.readFile(`${currentDirectory}/package.json`, 'utf8', (err, data) => {
       if (err) {
         console.error(err);
@@ -19,7 +20,7 @@ export async function apply():Promise<void> {
           packages.filter(project => project !== 'packages/*').join('\n')
         )}`,
       );
-      resolve();
+      resolve(StepStatus.Stop);
     });
   })
 }

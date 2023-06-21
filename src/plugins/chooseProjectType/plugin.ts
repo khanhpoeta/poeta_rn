@@ -1,5 +1,6 @@
+import { StepStatus } from "@/models";
 
-export async function apply(value: any):Promise<void> {
+export async function apply(value: string):Promise<StepStatus | any> {
   return Promise.resolve(value);
 }
 

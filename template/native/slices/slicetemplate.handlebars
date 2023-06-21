@@ -1,0 +1,179 @@
+import { DefaultDALCollection } from "../dal/SharedDALCollection";
+import {
+  IFilterItem,
+  ISortData,
+  ObjectStatus,
+  ISearch{{sliceName}},
+  IPost{{sliceName}},
+  IPatch{{sliceName}},
+  I{{sliceName}},
+} from "../models";
+import {
+  createAction,
+  createAsyncThunk,
+  createEntityAdapter,
+  createSelector,
+  createSlice,
+} from "@reduxjs/toolkit";
+import { RootState } from "./index";
+import { ThunkStatus, ThunkStatusType } from "./types";
+
+export const resetAll = createAction("RESET_ALL");
+
+export const search{{sliceName}} = createAsyncThunk(
+  "{{firstLower sliceName}}/fetchAll",
+  async (request: ISearch{{sliceName}}, { rejectWithValue }) => {
+    const response = await DefaultDALCollection.getDALCollection()
+      .get{{sliceName}}DAL()
+      .search(data);
+    if (response.data) {
+      return response.data;
+    } else if (response.error) {
+      return rejectWithValue(response.error);
+    }
+  }
+);
+
+export const create{{sliceName}} = createAsyncThunk(
+  "{{firstLower sliceName}}/create",
+  async (data: IPost{{sliceName}}, { rejectWithValue }) => {
+    const response = await DefaultDALCollection.getDALCollection()
+      .get{{sliceName}}DAL()
+      .create(data);
+    if (response.data) {
+      return response.data;
+    } else if (response.error) {
+      return rejectWithValue(response.error);
+    }
+  }
+);
+
+export const update{{sliceName}} = createAsyncThunk(
+  "{{firstLower sliceName}}/update",
+  async (data: IPatch{{sliceName}}, { rejectWithValue }) => {
+    const response = await DefaultDALCollection.getDALCollection()
+      .get{{ sliceName}}DAL()
+      .update(data);
+    if (response.data) {
+      return response.data;
+    } else if (response.error) {
+      return rejectWithValue(response.error);
+    }
+  }
+);
+
+const {{sliceName}}Adapter = createEntityAdapter<I{{sliceName}}>({
+  sortComparer: (a, b) => b.id - a.id,
+});
+
+const initialState = {{sliceName}}Adapter.getInitialState({
+  status: ThunkStatus.Idle as ThunkStatusType,
+  error: null as string | null,
+  total: 0 as number,
+});
+
+const slice = createSlice({
+  name: "{{firstLower sliceName}}",
+  initialState,
+  reducers: {},
+  extraReducers(builder) {
+    builder.addCase(resetAll, () => initialState);
+    builder.addCase(search{{sliceName}}.fulfilled, (state, action) => {
+      state.status = ThunkStatus.Fulfilled;
+      state.error = null;
+      state.total = action.payload?.total!;
+      {{sliceName}}Adapter.upsertMany(state, action.payload?.data!);
+    });
+    builder.addCase(search{{sliceName}}.pending, (state, _action) => {
+      state.status = ThunkStatus.Pending;
+      state.error = null;
+    });
+    builder.addCase(search{{sliceName}}.rejected, (state, action) => {
+      state.status = ThunkStatus.Rejected;
+      state.error = action.payload as string;
+    });
+    builder.addCase(create{{sliceName}}.fulfilled, (state, action) => {
+      state.status = ThunkStatus.Fulfilled;
+      state.error = null;
+      {{sliceName}}Adapter.addOne(state, action.payload!);
+    });
+    builder.addCase(create{{sliceName}}.rejected, (state, action) => {
+      state.status = ThunkStatus.Rejected;
+      state.error = action.error.message || null;
+    });
+    builder.addCase(update{{sliceName}}.fulfilled, (state, action) => {
+      state.status = ThunkStatus.Fulfilled;
+      state.error = null;
+      const {{sliceName}} = action.payload as I{{sliceName}};
+      {{sliceName}}Adapter.updateOne(state, {
+        id: {{sliceName}}.id,
+        changes: {{sliceName}},
+      });
+    });
+    builder.addCase(update{{sliceName}}.rejected, (state, action) => {
+      state.status = ThunkStatus.Rejected;
+      state.error = action.error.message || null;
+    });
+  },
+});
+
+export const reducer = slice.reducer;
+
+export const selec{{sliceName}}ThunkStatus = createSelector(
+  (state: RootState) => {
+    return {
+      status: state.{{firstLower sliceName}}.status,
+      error: state.{{firstLower sliceName}}.error,
+      total: state.{{firstLower sliceName}}.total,
+    };
+  },
+  (result) => result
+);
+
+const { selectAll, selectById } = {{sliceName}}Adapter.getSelectors(
+  (state: RootState) => state.{{firstLower sliceName}}
+);
+
+interface I{{sliceName}}SelectorArgs {
+  status?: ObjectStatus;
+  sorting?: ISortData;
+  filters?: IFilterItem[];
+}
+
+export const selectAll{{sliceName}} = createSelector(
+  selectAll,
+  (state: RootState, args: I{{sliceName}}SelectorArgs) => args,
+  ({{firstLower sliceName}}, args) => {
+    // filter status
+    const filters = args.filters;
+    if (filters && filters.length > 0) {
+      const filter = filters[0];
+      if (
+        filter.value !== undefined &&
+        filter.value !== null &&
+        filter.value.trim() !== ""
+      ) {
+        const result: I{{sliceName}}[] = {{firstLower sliceName}}.filter(
+          (p) =>
+            p.email.toLowerCase()?.includes(filter.value.toLowerCase()) ||
+            p.name
+              ?.toLocaleLowerCase()
+              .includes(filter.value.toLocaleLowerCase()) ||
+            p.health_care_number?.includes(filter.value) ||
+            p.relationships_name
+              .toLowerCase()
+              ?.includes(filter.value.toLowerCase())
+        );
+        return result;
+      }
+    }
+    return {{firstLower sliceName}};
+  }
+);
+
+export const select{{sliceName}}ById = createSelector(
+  (state: RootState, profileId: number) => selectById(state, profileId),
+  ({{firstLower sliceName}}) => {
+    return {{firstLower sliceName}};
+  }
+);

@@ -17,3 +17,17 @@ export const currentProjectFolder = (path?:string) =>{
   }
   return  `${currentDirectory}`;
 }
+
+Object.defineProperty(String.prototype, 'firstUpper', {
+  value: function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+  },
+  enumerable: false
+});
+
+Object.defineProperty(String.prototype, 'firstLower', {
+  value: function() {
+    return this.charAt(0).toLowerCase() + this.slice(1);
+  },
+  enumerable: false
+});

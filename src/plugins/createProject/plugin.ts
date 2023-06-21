@@ -1,6 +1,6 @@
 
 import { green, blue } from 'kleur';
-import { IResponse } from '@/models';
+import { IResponse, StepStatus } from '../../models';
 import { PluginActions, ProjectType } from '../../constants';
 import { 
   clonePackage, 
@@ -12,7 +12,7 @@ import {
   replaceXcodeProjectConfig 
 } from './actions/react';
 
-export async function apply(value: any, previousValues: IResponse[]):Promise<void> {
+export async function apply(value: any, previousValues: IResponse[]):Promise<StepStatus> {
 
   const projectType = previousValues.filter(res => res.name === PluginActions.ChooseProjectType).shift()?.value as ProjectType;
 
@@ -40,7 +40,7 @@ export async function apply(value: any, previousValues: IResponse[]):Promise<voi
       break;
   }
  
-  return Promise.resolve();
+  return Promise.resolve(StepStatus.Stop);
 }
 
 

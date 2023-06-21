@@ -1,7 +1,5 @@
+import { IPlugin, StepStatus, IResponse } from '../models';
 import prompts from 'prompts';
-import { IPlugin } from '@/models';
-import { IResponse } from '@/models';
-
 /**
  * Apply a plugin
  * @param name: the plugin name
@@ -12,24 +10,15 @@ import { IResponse } from '@/models';
  */
 
 
-async function applyPlugin(plugin: IPlugin, responses: IResponse[]) {
+async function applyPlugin(plugin: IPlugin, responses: IResponse[]): Promise<StepStatus | any> {
   const {option,apply} = plugin;
-  const response = responses.filter(res => res.name === plugin.name).shift();
-    
   if(option)
   {
-    const {value} = await prompts(option);
-    if(response)
-    {
-      response.value = value;
-    }
-    return await apply(value, responses);
+    return prompts(option).then((value) => {
+      return apply(value, responses);
+    })
   }
-  if(response)
-  {
-    response.value = undefined;
-  }
-  return await apply(null, responses);
+  return apply(null, responses);
 }
 
 export async function applyPlugins(plugins: IPlugin[]) {
@@ -37,6 +26,10 @@ export async function applyPlugins(plugins: IPlugin[]) {
   return plugins.reduce((p, plugin) => {
     return p.then(async (response) => {
       responses.push({name:plugin.name,value:response});
-      return await applyPlugin(plugin,responses)});
- }, Promise.resolve());
+      if(response === StepStatus.Stop)
+      {
+        return;
+      }
+      return applyPlugin(plugin,responses)});
+ }, Promise.resolve(StepStatus.Next));
 }

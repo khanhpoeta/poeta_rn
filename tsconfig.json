@@ -1,10 +1,10 @@
 {
-  "display": "Poeta Boilerplate",
-  "_version": "0.0.1",
+  "display": "React Native",
+  "_version": "2.0.3",
   "compilerOptions": {
     "target": "esnext",
     "module": "commonjs",
-    "lib": ["esnext", "dom"],
+    "lib": ["es2019", "dom"],
     "declaration": true,
     "rootDir": "src" /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */,
     "outDir": "build" /* Redirect output structure to the directory. */,
