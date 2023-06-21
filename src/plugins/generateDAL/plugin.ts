@@ -1,29 +1,29 @@
 
 import fs from "fs";
 import {camelCase} from 'lodash';
-import {renderFile} from 'ejs';
 import {currentProjectFolder, projectRootFolder} from "../utils";
 import {green} from "kleur";
 import { ProjectType } from "../../constants";
-
-interface DALInfo{
-  className: string,
-  variable: string,
-}
+import { TemplateEngineCollection } from "../../templateEngine/TemplateEngineCollection";
+import { JSONArray } from "../../templateEngine/TemplateEngine";
 
 export async function apply():Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    fs.readdir(`${currentProjectFolder('packages/shared/src/dal/extentions')}`, (_error,files) => {
-      const dals: DALInfo[] = [];
-      files.sort().forEach(file => {
+    const ignoreFiles = ['index.ts', 'SharedDALCollection.ts', 'BaseDAL.ts', 'HttpClient.ts'];
+    fs.readdir(`${currentProjectFolder('packages/shared/src/dal')}`, (_error,files) => {
+      const dals: JSONArray = [];
+      files.filter(f => !ignoreFiles.includes(f)).sort().forEach(file => {
         const className = file.replace('.ts','');
         dals.push({
           className,
           variable: camelCase(className)
         })
       })
-      renderFile(`${projectRootFolder(ProjectType.native, 'dal/SharedDALCollection.ejs')}`,{dals}).then(resonse => {
-        fs.writeFile(`${currentProjectFolder('packages/shared/src/dal/SharedDALCollection.ts')}`, resonse, (err) => {
+      TemplateEngineCollection.defaultEngine
+      .generateTemplateByFile(`${projectRootFolder(ProjectType.native, 'dal/SharedDALCollection.handlebars')}`,{'dals': dals})
+      .then(response => {
+        if(!response) return;
+        fs.writeFile(`${currentProjectFolder('packages/shared/src/dal/SharedDALCollection.ts')}`, response, (err) => {
           if(err)
           {
             reject(err);
@@ -36,7 +36,7 @@ export async function apply():Promise<void> {
           );
           resolve();
         });
-      }).catch(error => console.log(error));
+      });
     })
   })
 }
