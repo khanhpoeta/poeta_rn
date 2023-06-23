@@ -9,27 +9,29 @@ import prompts from 'prompts';
  * @return {Promise<*>}
  */
 
+let responses: IResponse[] = [];
 
 async function applyPlugin(plugin: IPlugin, responses: IResponse[]): Promise<StepStatus | any> {
   const {option,apply} = plugin;
   if(option)
   {
-    return prompts(option).then((value) => {
-      return apply(value, responses);
+    return prompts(option).then((response) => {
+      responses.push({name:plugin.name,value:response.value});
+      return apply(response.value, responses);
     })
   }
   return apply(null, responses);
 }
 
 export async function applyPlugins(plugins: IPlugin[]) {
-  const responses: IResponse[] = [];
+  responses = [];
   return plugins.reduce((p, plugin) => {
     return p.then(async (response) => {
-      responses.push({name:plugin.name,value:response});
       if(response === StepStatus.Stop)
       {
         return;
       }
-      return applyPlugin(plugin,responses)});
+      return applyPlugin(plugin,responses)
+    });
  }, Promise.resolve(StepStatus.Next));
 }

@@ -9,8 +9,8 @@ import { TemplateEngineCollection } from "../../templateEngine/TemplateEngineCol
 import { JSONArray } from "../../templateEngine/TemplateEngine";
 
 
-export async function apply(select: any):Promise<StepStatus> {
-  const codeType = select.value as GenerateNativeCode;
+export async function apply(select: any):Promise<StepStatus | any> {
+  const codeType = select as GenerateNativeCode;
   return new Promise<StepStatus>((resolve, reject) => {
     if(codeType === GenerateNativeCode.generateSlice){
       resolve(StepStatus.Next);

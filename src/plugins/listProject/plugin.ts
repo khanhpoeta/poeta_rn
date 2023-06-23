@@ -3,7 +3,7 @@ import { StepStatus } from '../../models';
 import fs from "fs";
 import { blue } from 'kleur';
 
-export async function apply():Promise<StepStatus> {
+export async function apply():Promise<StepStatus | any> {
   const currentDirectory = process.cwd();
 
   return new Promise<StepStatus>((resolve) => {

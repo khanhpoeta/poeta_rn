@@ -12,10 +12,10 @@ import {
   replaceXcodeProjectConfig 
 } from './actions/react';
 
-export async function apply(value: any, previousValues: IResponse[]):Promise<StepStatus> {
-
+export async function apply(value: any, previousValues: IResponse[]):Promise<StepStatus | any> {
+  
   const projectType = previousValues.filter(res => res.name === PluginActions.ChooseProjectType).shift()?.value as ProjectType;
-
+  console.log(previousValues);
   switch(projectType)
   {
     case ProjectType.native:
