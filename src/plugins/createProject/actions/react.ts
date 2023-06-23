@@ -50,7 +50,7 @@ export const copyResource = async (projectType:string, value:string)=> {
     }
     catch{
       await execSync(`
-      npx react-native@latest init ${value} --template git+ssh://git@bitbucket.org:poetaadmin/codebase.mobile.git#template &&
+      npx react-native@0.71.11 init ${value} --template git+ssh://git@bitbucket.org:poetaadmin/codebase.mobile.git#template &&
       bash ${appRoot.path}/configuration.sh ${projectRootFolder(projectType, podFile)} ${value} ${currentProjectFolder(value,podFile)} &&
       bash ${appRoot.path}/configuration.sh ${projectRootFolder(projectType, 'android/AndroidManifest.xml')} ${value} ${currentProjectFolder(value,manifest)} &&
       bash ${appRoot.path}/configuration.sh ${projectRootFolder(projectType, 'android/build.gradle')} ${value} ${currentProjectFolder(value,gradle)} &&
@@ -66,35 +66,52 @@ export const installPackages = async ()=> {
 }
 
 export const replaceWorkspacePackageContent = (value:string):Promise<void> => {
-    return new Promise<void>((resolve) => {
-      fs.readFile(`${currentDirectory}/package.json`, 'utf8', (err, data) => {
-        if (err) {
-          console.error(err);
-          return;
-        }
-        const packageJson = JSON.parse(data);
-        const workspaces = packageJson['workspaces'];
-        const packages = workspaces['packages'] as string[];
-        packages.push(value);
+  const workspacePackagePath = `${currentDirectory}/package.json`;
+  return new Promise<void>((resolve) => {
+    fs.readFile(workspacePackagePath, 'utf8', (err, data) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      const packageJson = JSON.parse(data);
+      const workspaces = packageJson['workspaces'];
+      const packages = workspaces['packages'] as string[];
+      packages.push(value);
 
-        // Add script to run application
-        const scripts = packageJson['scripts'];
-        scripts[`${value}:pods`] = `yarn workspace ${value} pods`;
-        scripts[`${value}:start`] = `[ -z "$env" ] && env=qc yarn workspace ${value} start || env=$env yarn workspace ${value} start`;
-        scripts[`${value}:ios`] = `[ -z "$env" ] && env=qc yarn workspace ${value} ios || env=$env yarn workspace ${value} ios`;
-        scripts[`${value}:android`] = `[ -z "$env" ] && env=qc yarn workspace ${value} android || env=$env yarn workspace ${value} android`;
-        scripts[`${value}:release_ios`] = `[ -z "$env" ] && env=qc yarn workspace ${value} release:ios || env=$env yarn workspace ${value} release:ios`;
-        scripts[`${value}:release_android`] = `[ -z "$env" ] && env=qc yarn workspace ${value} release:android || env=$env yarn workspace ${value} release:android`;
-
-        // Add script to share packages
-        const dependencies = packageJson['dependencies'];
-        dependencies[`@poeta/shared`] = `0.0.1`;
-        dependencies[`@poeta/react-native-shared`] = `0.0.1`;
-        fs.writeFile(`${currentDirectory}/package.json`, JSON.stringify(packageJson, null, 2), (err) => {
-            resolve();
-        });
+      // Add script to run application
+      const scripts = packageJson['scripts'];
+      scripts[`${value}:pods`] = `yarn workspace ${value} pods`;
+      scripts[`${value}:start`] = `[ -z "$env" ] && env=qc yarn workspace ${value} start || env=$env yarn workspace ${value} start`;
+      scripts[`${value}:ios`] = `[ -z "$env" ] && env=qc yarn workspace ${value} ios || env=$env yarn workspace ${value} ios`;
+      scripts[`${value}:android`] = `[ -z "$env" ] && env=qc yarn workspace ${value} android || env=$env yarn workspace ${value} android`;
+      scripts[`${value}:release_ios`] = `[ -z "$env" ] && env=qc yarn workspace ${value} release:ios || env=$env yarn workspace ${value} release:ios`;
+      scripts[`${value}:release_android`] = `[ -z "$env" ] && env=qc yarn workspace ${value} release:android || env=$env yarn workspace ${value} release:android`;
+      fs.writeFile(workspacePackagePath, JSON.stringify(packageJson, null, 2), (err) => {
+          resolve();
       });
-    })
+    });
+  })
+}
+
+export const updateProjectPackageContent = (value:string):Promise<void> => {
+  const projectPackagePath = `${currentDirectory}/${value}/package.json`;
+  return new Promise<void>((resolve) => {
+    fs.readFile(projectPackagePath, 'utf8', (err, data) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      const packageJson = JSON.parse(data);
+      // Add script to share packages
+      const dependencies = packageJson['dependencies'];
+      dependencies[`@poeta/shared`] = `0.0.1`;
+      dependencies[`@poeta/react-native-shared`] = `0.0.1`;
+
+      fs.writeFile(projectPackagePath, JSON.stringify(packageJson, null, 2), (err) => {
+          resolve();
+      });
+    });
+  })
 }
 
 export const configLaunchVSCode = (value:string):Promise<void> => {
