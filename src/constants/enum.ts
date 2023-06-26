@@ -10,5 +10,6 @@ export enum PluginActions {
 export enum ProjectType{
   native = 'native',
   web = 'web',
+  next = 'next',
   php = 'php'
 }

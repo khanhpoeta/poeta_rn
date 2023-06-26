@@ -13,6 +13,10 @@ import {
   updateProjectPackageContent
 } from './actions/react';
 
+import { 
+  create
+} from './actions/next';
+
 export async function apply(value: any, previousValues: IResponse[]):Promise<StepStatus | any> {
   
   const projectType = previousValues.filter(res => res.name === PluginActions.ChooseProjectType).shift()?.value as ProjectType;
@@ -38,6 +42,16 @@ export async function apply(value: any, previousValues: IResponse[]):Promise<Ste
         )}`,
       );
       break;
+    case ProjectType.next:
+      create(value).then(async () => {
+        await installPackages();
+        console.log(
+          `${green(
+            'Happy coding !'
+          )}`,
+        );
+      });
+     break;
   }
  
   return Promise.resolve(StepStatus.Stop);

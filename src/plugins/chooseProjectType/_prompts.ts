@@ -18,6 +18,11 @@ export default {
       value: ProjectType.web
     },
     {
+      title: ProjectType.next, 
+      selected: false,
+      value: ProjectType.next
+    },
+    {
       title: ProjectType.php, 
       selected: false,
       value: ProjectType.php
