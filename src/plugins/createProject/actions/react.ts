@@ -50,7 +50,7 @@ export const copyResource = async (projectType:string, value:string)=> {
     }
     catch{
       await execSync(`
-      npx react-native@0.71.11 init ${value} --template git+ssh://git@bitbucket.org:poetaadmin/codebase.mobile.git#template &&
+      npx react-native@latest init ${value} --template git+ssh://git@bitbucket.org:poetaadmin/codebase.mobile.git#template &&
       bash ${appRoot.path}/configuration.sh ${projectRootFolder(projectType, podFile)} ${value} ${currentProjectFolder(value,podFile)} &&
       bash ${appRoot.path}/configuration.sh ${projectRootFolder(projectType, 'android/AndroidManifest.xml')} ${value} ${currentProjectFolder(value,manifest)} &&
       bash ${appRoot.path}/configuration.sh ${projectRootFolder(projectType, 'android/build.gradle')} ${value} ${currentProjectFolder(value,gradle)} &&
