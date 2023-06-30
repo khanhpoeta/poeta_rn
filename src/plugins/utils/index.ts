@@ -19,9 +19,7 @@ export const currentProjectFolder = (path?:string) =>{
 }
 
 Object.defineProperty(String.prototype, 'firstUpper', {
-  value: function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-  },
+  value: Function("return this.charAt(0).toLowerCase() + this.slice(1);"),
   enumerable: false
 });
 
